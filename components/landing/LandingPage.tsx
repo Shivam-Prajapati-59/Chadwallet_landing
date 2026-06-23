@@ -2,6 +2,8 @@ import HeroSection from "./HeroSection";
 import LandingNavbar from "./LandingNavbar";
 import LandingFooter from "./LandingFooter";
 import FeaturesSection from "./FeaturesSection";
+import TokenBanner from "../custom/TokenBanner";
+import BentoGrid from "./BentoGrid";
 
 const LandingPage = () => {
   return (
@@ -9,8 +11,10 @@ const LandingPage = () => {
       <LandingNavbar />
       <main className="flex-1">
         <HeroSection />
+        <FeaturesSection />
+        <BentoGrid />
+        <TokenBanner />
       </main>
-      <FeaturesSection />
       <LandingFooter />
     </div>
   );
