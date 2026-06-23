@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import TradingImage from "../../public/assets/tradingpage.png";
-import kolImage from "../../public/assets/kol.png";
+import SecondSeacrhImage from "@/public/assets/SecondCard.png";
 import DiscoverImage from "@/public/assets/discover.png";
 
 const HeroSection = () => {
@@ -14,7 +14,7 @@ const HeroSection = () => {
           Every Chain. One Wallet
         </span>
       </h1>
-      <p className="mt-6 max-w-2xl text-lg text-slate-300 md:text-xl">
+      <p className="mt-6 max-w-2xl text-lg text-slate-300 md:text-xl ">
         Discover, track, and trade the hottest memecoins across every blockchain
         from a single powerful wallet.
       </p>
@@ -46,6 +46,15 @@ const HeroSection = () => {
             width={293}
             height={170}
             className="w-full h-auto object-contain drop-shadow-2xl transition-transform duration-300 hover:scale-105"
+          />
+        </div>
+        <div className="backdrop-blur-xl rounded-lg hidden md:block absolute md:-bottom-5 md:left-10">
+          <Image
+            src={SecondSeacrhImage}
+            alt="second Card"
+            width={200}
+            height={200}
+            className="w-full h-auto object-contain drop-shadow-2xl"
           />
         </div>
       </div>
