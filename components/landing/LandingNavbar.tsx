@@ -4,14 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Dark_logo from "../../public/assets/dark_logo.png";
+import { NAV_ITEMS } from "@/config/landing";
 
-const LandingNavbarItems = [
-  { link: "/", label: "Home" },
-  { link: "about", label: "About" },
-  { link: "features", label: "Workflow" },
-  { link: "protocols", label: "Protocols" },
-  { link: "faq", label: "FAQ" },
-];
+
 
 export default function LandingNavbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -47,7 +42,7 @@ export default function LandingNavbar() {
 
         {/* Desktop Nav Links */}
         <div className="hidden items-center gap-8 md:flex">
-          {LandingNavbarItems.map((link) => (
+          {NAV_ITEMS.map((link) => (
             <Link
               key={link.link}
               href={link.link}
@@ -98,7 +93,7 @@ export default function LandingNavbar() {
       {mobileMenuOpen && (
         <div className="rounded-xl border border-white/10 bg-[#09111d]/95 p-5 backdrop-blur-2xl md:hidden">
           <div className="flex flex-col gap-4">
-            {LandingNavbarItems.map((link) => (
+            {NAV_ITEMS.map((link) => (
               <Link
                 key={link.link}
                 href={link.link}

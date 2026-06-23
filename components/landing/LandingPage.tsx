@@ -4,6 +4,7 @@ import LandingFooter from "./LandingFooter";
 import FeaturesSection from "./FeaturesSection";
 import TokenBanner from "../custom/TokenBanner";
 import BentoGrid from "./BentoGrid";
+import ClaimSection from "./ClaimSection";
 
 const LandingPage = () => {
   return (
@@ -13,6 +14,7 @@ const LandingPage = () => {
         <HeroSection />
         <FeaturesSection />
         <BentoGrid />
+        <ClaimSection />
         <TokenBanner />
       </main>
       <LandingFooter />

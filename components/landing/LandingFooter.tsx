@@ -3,36 +3,9 @@ import Link from "next/link";
 import Applestore from "../../public/assets/applestore.png";
 import Googleplay from "../../public/assets/goggleplay.png";
 import DarkLogo from "../../public/assets/dark_logo.png";
+import { FOOTER_DATA } from "@/config/landing";
 
-const footerLinks = [
-  {
-    title: "Resources",
-    links: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
-      { label: "Workflow", href: "/features" },
-      { label: "Protocols", href: "/protocols" },
-      { label: "FAQ", href: "/faq" },
-    ],
-  },
-  {
-    title: "Community",
-    links: [
-      { label: "X / Twitter", href: "https://x.com/getchadwallet" },
-      {
-        label: "LinkedIn",
-        href: "https://www.linkedin.com/company/chadwallet/posts/?feedView=all",
-      },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Terms of Service", href: "https://www.chadwallet.xyz/terms" },
-      { label: "Privacy Policy", href: "https://www.chadwallet.xyz/privacy" },
-    ],
-  },
-];
+
 
 const LandingFooter = () => {
   return (
@@ -53,14 +26,13 @@ const LandingFooter = () => {
             </Link>
 
             <p className="mt-4 max-w-sm text-sm leading-6 text-slate-400">
-              Discover, track, and trade the hottest memecoins across every
-              blockchain from a single powerful wallet.
+              {FOOTER_DATA.brandDescription}
             </p>
           </div>
 
           {/* Footer Links */}
           <div className="grid grid-cols-2 gap-12 lg:grid-cols-4 sm:gap-20">
-            {footerLinks.map((section) => (
+            {FOOTER_DATA.sections.map((section) => (
               <div key={section.title}>
                 <h3 className="mb-4 text-md font-semibold ">{section.title}</h3>
 
@@ -94,7 +66,7 @@ const LandingFooter = () => {
               </h3>
               <div className="flex flex-col gap-3">
                 <Link
-                  href="https://apps.apple.com/us/app/chadwallet/id6757367474"
+                  href="{FOOTER_DATA.appStoreLink}"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -107,7 +79,7 @@ const LandingFooter = () => {
                   />
                 </Link>
                 <Link
-                  href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
+                  href="{FOOTER_DATA.googlePlayLink}"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -126,7 +98,7 @@ const LandingFooter = () => {
 
         {/* Bottom Section */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-center text-sm text-slate-500 md:flex-row md:text-left">
-          <p>© {new Date().getFullYear()} ChadWallet. All rights reserved.</p>
+          <p>{FOOTER_DATA.copyright}</p>
         </div>
       </div>
     </footer>

@@ -3,7 +3,7 @@ import {
   MarqueeContent,
   MarqueeFade,
   MarqueeItem,
-} from "@/components/kibo-ui/marquee";
+} from "@/components/ui/marquee";
 
 export const title = "Edge fade";
 
