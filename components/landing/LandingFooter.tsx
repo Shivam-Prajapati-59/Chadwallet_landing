@@ -1,11 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import Applestore from "../../public/assets/applestore.png";
-import Googleplay from "../../public/assets/goggleplay.png";
 import DarkLogo from "../../public/assets/dark_logo.png";
 import { FOOTER_DATA } from "@/config/landing";
-
-
 
 const LandingFooter = () => {
   return (
@@ -61,34 +57,32 @@ const LandingFooter = () => {
 
             {/* Mobile Apps Section */}
             <div>
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-slate-300">
-                Get the App
-              </h3>
+              <h3 className="mb-4 text-md font-semibold">Get the App</h3>
               <div className="flex flex-col gap-3">
                 <Link
-                  href="{FOOTER_DATA.appStoreLink}"
+                  href={FOOTER_DATA.appStoreLink}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <Image
-                    src={Applestore}
+                    src="https://www.chadwallet.xyz/_next/image?url=%2Fimages%2Fapp-store.png&w=384&q=75"
                     alt="App Store"
                     width={498}
                     height={167}
-                    className="w-[140px] md:w-[150px] h-auto transition-opacity hover:opacity-80"
+                    className="w-35 md:w-37.5 h-auto transition-opacity hover:opacity-80"
                   />
                 </Link>
                 <Link
-                  href="{FOOTER_DATA.googlePlayLink}"
+                  href={FOOTER_DATA.googlePlayLink}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <Image
-                    src={Googleplay}
+                    src="https://www.chadwallet.xyz/_next/image?url=%2Fimages%2Fgoogle-play.png&w=640&q=75"
                     alt="Google Play"
-                    width={646}
-                    height={250}
-                    className="w-[165px] md:w-[175px] h-auto -ml-3 transition-opacity hover:opacity-80"
+                    width={498}
+                    height={498}
+                    className="w-41.25 md:w-43.75 h-auto  transition-opacity hover:opacity-80"
                   />
                 </Link>
               </div>

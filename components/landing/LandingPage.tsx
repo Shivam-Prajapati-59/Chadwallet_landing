@@ -10,12 +10,12 @@ const LandingPage = () => {
   return (
     <div className="flex min-h-screen flex-col bg-[#050816]">
       <LandingNavbar />
-      <main className="flex-1">
+      <main className="flex-1 pt-20">
+        <TokenBanner />
         <HeroSection />
         <FeaturesSection />
         <BentoGrid />
         <ClaimSection />
-        <TokenBanner />
       </main>
       <LandingFooter />
     </div>

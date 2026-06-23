@@ -32,31 +32,31 @@ export default function BentoGrid() {
                 {BENTO_GRID_DATA.leaderboardCard.description}
               </p>
             </CardHeader>
-            <CardContent className="flex flex-col p-6 pt-0 overflow-x-auto">
-              <div className="min-w-75">
+            <CardContent className="flex flex-col p-4 md:p-6 pt-0">
+              <div className="w-full">
                 {/* Table Header */}
-                <div className="grid grid-cols-[35px_1fr_45px_75px_85px] gap-3 text-muted-foreground font-medium pb-3 border-b border-white/10 uppercase tracking-wider text-xs">
+                <div className="grid grid-cols-[20px_1fr_35px_50px_65px] sm:grid-cols-[35px_1fr_45px_75px_85px] gap-2 md:gap-3 text-muted-foreground font-medium pb-3 border-b border-white/10 uppercase tracking-wider text-[10px] sm:text-xs">
                   <div className="text-center">Rank</div>
                   <div>X</div>
-                  <div className="text-right">Boost</div>
-                  <div className="text-right">24h Pts</div>
-                  <div className="text-right">Total</div>
+                  <div className="text-right truncate">Boost</div>
+                  <div className="text-right truncate">24h Pts</div>
+                  <div className="text-right truncate">Total</div>
                 </div>
 
                 {/* "You" Row */}
-                <div className="grid grid-cols-[35px_1fr_45px_75px_85px] gap-3 items-center py-3 bg-white/10 rounded-xl my-3 px-3 -mx-3 font-semibold text-white text-sm border border-white/10 shadow-lg">
+                <div className="grid grid-cols-[20px_1fr_35px_50px_65px] sm:grid-cols-[35px_1fr_45px_75px_85px] gap-2 md:gap-3 items-center py-3 bg-white/10 rounded-xl my-3 px-2 sm:px-3 -mx-2 sm:-mx-3 font-semibold text-white text-[11px] sm:text-sm border border-white/10 shadow-lg">
                   <div className="text-center text-muted-foreground">{BENTO_GRID_DATA.leaderboardCard.youRow.rank}</div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3">
                     <img
                       src={BENTO_GRID_DATA.leaderboardCard.youRow.image}
                       alt={BENTO_GRID_DATA.leaderboardCard.youRow.name}
-                      className="w-7 h-7 rounded-full bg-white/20"
+                      className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-white/20 shrink-0"
                     />
                     <span className="truncate text-green-400">{BENTO_GRID_DATA.leaderboardCard.youRow.name}</span>
                   </div>
-                  <div className="text-right text-muted-foreground">{BENTO_GRID_DATA.leaderboardCard.youRow.boost}</div>
-                  <div className="text-right text-muted-foreground">{BENTO_GRID_DATA.leaderboardCard.youRow.dailyPoints}</div>
-                  <div className="text-right text-muted-foreground">{BENTO_GRID_DATA.leaderboardCard.youRow.totalPoints}</div>
+                  <div className="text-right text-muted-foreground truncate">{BENTO_GRID_DATA.leaderboardCard.youRow.boost}</div>
+                  <div className="text-right text-muted-foreground truncate">{BENTO_GRID_DATA.leaderboardCard.youRow.dailyPoints}</div>
+                  <div className="text-right text-muted-foreground truncate">{BENTO_GRID_DATA.leaderboardCard.youRow.totalPoints}</div>
                 </div>
 
                 {/* Leaderboard Rows */}
@@ -64,26 +64,26 @@ export default function BentoGrid() {
                   {BENTO_GRID_DATA.leaderboardCard.rows.map((row) => (
                     <div
                       key={row.name}
-                      className="grid grid-cols-[35px_1fr_45px_75px_85px] gap-3 items-center py-2 hover:bg-white/5 rounded-xl px-3 -mx-3 transition-colors"
+                      className="grid grid-cols-[20px_1fr_35px_50px_65px] sm:grid-cols-[35px_1fr_45px_75px_85px] gap-2 md:gap-3 items-center py-2 hover:bg-white/5 rounded-xl px-2 sm:px-3 -mx-2 sm:-mx-3 transition-colors text-[11px] sm:text-sm"
                     >
-                      <div className="text-center font-bold text-base">
+                      <div className="text-center font-bold text-xs sm:text-base">
                         {row.rank}
                       </div>
-                      <div className="flex items-center gap-3 font-medium text-white truncate">
+                      <div className="flex items-center gap-2 sm:gap-3 font-medium text-white truncate">
                         <img
                           src={row.image}
                           alt={row.name}
-                          className="w-7 h-7 rounded-full bg-white/10"
+                          className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-white/10 shrink-0"
                         />
                         <span className="truncate">{row.name}</span>
                       </div>
-                      <div className="text-right text-green-400 font-medium">
+                      <div className="text-right text-green-400 font-medium truncate">
                         {row.boost}
                       </div>
-                      <div className="text-right text-muted-foreground">
+                      <div className="text-right text-muted-foreground truncate">
                         {row.dailyPoints}
                       </div>
-                      <div className="text-right text-white font-semibold">
+                      <div className="text-right text-muted-foreground truncate">
                         {row.totalPoints}
                       </div>
                     </div>

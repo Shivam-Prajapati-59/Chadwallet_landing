@@ -18,8 +18,8 @@ const TokenBanner = () => {
         <Marquee>
           <MarqueeContent>
             {TOKEN_DATA.map((token, i) => (
-              <MarqueeItem key={i} className="mx-6">
-                <div className="flex items-center gap-3 font-medium text-sm tracking-wide">
+              <MarqueeItem key={i} className="flex items-center">
+                <div className="mx-6 md:mx-10 flex items-center gap-3 font-medium text-sm tracking-wide">
                   <span className="font-bold">{token.symbol}</span>
                   <span>{token.price}</span>
                   <span
@@ -36,6 +36,7 @@ const TokenBanner = () => {
                     {token.change}
                   </span>
                 </div>
+                <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
               </MarqueeItem>
             ))}
           </MarqueeContent>
