@@ -1,9 +1,8 @@
-import React from "react";
-import TradingDashboard from "@/components/TradIngPanel/TradingDashboard";
+import TradingDashboard from "@/components/TradingPanel/TradingDashboard";
 
 const page = () => {
   return (
-    <div className="flex-1 flex flex-col w-full">
+    <div className="h-[850px] w-full">
       <TradingDashboard />
     </div>
   );

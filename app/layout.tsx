@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Providers from "@/providers/provider";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-heading" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -34,7 +35,9 @@ export default function RootLayout({
       )}
       style={{ colorScheme: "dark" }}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

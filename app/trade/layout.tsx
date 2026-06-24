@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans, IBM_Plex_Sans, DM_Sans } from "next/font/google";
-import TradingNavbar from "@/components/TradIngPanel/TradingNavbar";
+import TradingNavbar from "@/components/TradingPanel/TradingNavbar";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -32,10 +32,10 @@ export default function TradeLayout({
 }) {
   return (
     <div
-      className={`${notoSans.variable} ${ibmPlexSans.variable} ${dmSans.variable} font-sans min-h-screen bg-[#050816] text-white flex flex-col`}
+      className={`${notoSans.variable} ${ibmPlexSans.variable} ${dmSans.variable} font-sans h-screen overflow-hidden bg-[#050816] text-white flex flex-col`}
     >
       <TradingNavbar />
-      <main className="flex-1 flex flex-col">{children}</main>
+      <main className="flex-1 min-h-0">{children}</main>
     </div>
   );
 }
