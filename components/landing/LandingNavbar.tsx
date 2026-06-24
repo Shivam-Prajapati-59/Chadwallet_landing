@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import Dark_logo from "../../public/assets/dark_logo.png";
 import { NAV_ITEMS } from "@/config/landing";
 
-
-
 export default function LandingNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

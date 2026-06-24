@@ -27,7 +27,9 @@ export default function BentoGrid() {
           {/* Card 1: Leaderboard */}
           <Card className="rounded-2xl shadow-xs lg:row-span-2 overflow-hidden flex flex-col bg-[#0B0E17] border-white/10">
             <CardHeader className="pb-4">
-              <h3 className="text-xl font-bold font-heading">{BENTO_GRID_DATA.leaderboardCard.title}</h3>
+              <h3 className="text-xl font-bold font-heading">
+                {BENTO_GRID_DATA.leaderboardCard.title}
+              </h3>
               <p className="text-muted-foreground text-sm">
                 {BENTO_GRID_DATA.leaderboardCard.description}
               </p>
@@ -44,19 +46,29 @@ export default function BentoGrid() {
                 </div>
 
                 {/* "You" Row */}
-                <div className="grid grid-cols-[20px_1fr_35px_50px_65px] sm:grid-cols-[35px_1fr_45px_75px_85px] gap-2 md:gap-3 items-center py-3 bg-white/10 rounded-xl my-3 px-2 sm:px-3 -mx-2 sm:-mx-3 font-semibold text-white text-[11px] sm:text-sm border border-white/10 shadow-lg">
-                  <div className="text-center text-muted-foreground">{BENTO_GRID_DATA.leaderboardCard.youRow.rank}</div>
+                <div className="grid grid-cols-[20px_1fr_35px_50px_65px] sm:grid-cols-[35px_1fr_45px_75px_85px] gap-2 md:gap-3 items-center py-3 bg-white/10 rounded-xl my-3 px-2 sm:px-3 -mx-2 sm:-mx-3 font-semibold text-[11px] sm:text-sm border border-white/10 shadow-lg">
+                  <div className="text-center text-muted-foreground">
+                    {BENTO_GRID_DATA.leaderboardCard.youRow.rank}
+                  </div>
                   <div className="flex items-center gap-2 sm:gap-3">
                     <img
                       src={BENTO_GRID_DATA.leaderboardCard.youRow.image}
                       alt={BENTO_GRID_DATA.leaderboardCard.youRow.name}
-                      className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-white/20 shrink-0"
+                      className="w-4 h-4 sm:w-5 sm:h-6 rounded-full bg-white/20 shrink-0"
                     />
-                    <span className="truncate text-green-400">{BENTO_GRID_DATA.leaderboardCard.youRow.name}</span>
+                    <span className="truncate text-green-400">
+                      {BENTO_GRID_DATA.leaderboardCard.youRow.name}
+                    </span>
                   </div>
-                  <div className="text-right text-muted-foreground truncate">{BENTO_GRID_DATA.leaderboardCard.youRow.boost}</div>
-                  <div className="text-right text-muted-foreground truncate">{BENTO_GRID_DATA.leaderboardCard.youRow.dailyPoints}</div>
-                  <div className="text-right text-muted-foreground truncate">{BENTO_GRID_DATA.leaderboardCard.youRow.totalPoints}</div>
+                  <div className="text-center text-muted-foreground truncate">
+                    {BENTO_GRID_DATA.leaderboardCard.youRow.boost}
+                  </div>
+                  <div className="text-center text-muted-foreground truncate">
+                    {BENTO_GRID_DATA.leaderboardCard.youRow.dailyPoints}
+                  </div>
+                  <div className="text-center text-muted-foreground truncate">
+                    {BENTO_GRID_DATA.leaderboardCard.youRow.totalPoints}
+                  </div>
                 </div>
 
                 {/* Leaderboard Rows */}
@@ -96,14 +108,19 @@ export default function BentoGrid() {
           {/* Card 2: Quests */}
           <Card className="rounded-2xl shadow-xs overflow-hidden flex flex-col bg-[#0B0E17] border-white/10">
             <CardHeader className="pb-2">
-              <h3 className="text-xl font-bold font-heading">{BENTO_GRID_DATA.questsCard.title}</h3>
+              <h3 className="text-xl font-bold font-heading">
+                {BENTO_GRID_DATA.questsCard.title}
+              </h3>
               <p className="text-muted-foreground text-sm">
                 {BENTO_GRID_DATA.questsCard.description}
               </p>
             </CardHeader>
             <CardContent className="flex flex-col gap-2 p-6 pt-2">
               {BENTO_GRID_DATA.questsCard.quests.map((quest, i) => (
-                <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                <div
+                  key={i}
+                  className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors"
+                >
                   <div>
                     <p className="font-semibold text-white text-sm">
                       {quest.title}
@@ -112,7 +129,9 @@ export default function BentoGrid() {
                       {quest.description}
                     </p>
                   </div>
-                  <div className={`font-bold text-sm px-2 py-1 rounded-md ${quest.completed ? "flex items-center gap-1.5 text-green-400 bg-green-400/10" : "text-green-400 bg-green-400/10"}`}>
+                  <div
+                    className={`font-bold text-sm px-2 py-1 rounded-md ${quest.completed ? "flex items-center gap-1.5 text-green-400 bg-green-400/10" : "text-green-400 bg-green-400/10"}`}
+                  >
                     {quest.completed && <CheckCircle2 className="w-4 h-4" />}
                     {quest.reward}
                   </div>
@@ -125,7 +144,9 @@ export default function BentoGrid() {
           <Card className="rounded-2xl shadow-xs lg:col-start-2 overflow-hidden flex flex-col bg-[#0B0E17] border-white/10">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold font-heading">{BENTO_GRID_DATA.rewardsCard.title}</h3>
+                <h3 className="text-xl font-bold font-heading">
+                  {BENTO_GRID_DATA.rewardsCard.title}
+                </h3>
                 <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground bg-white/10 px-2 py-1 rounded-md">
                   {BENTO_GRID_DATA.rewardsCard.endDate}
                 </span>
@@ -140,7 +161,9 @@ export default function BentoGrid() {
                   <p className="font-bold text-white text-lg leading-tight">
                     {BENTO_GRID_DATA.rewardsCard.description}
                   </p>
-                  <p className="text-green-400 font-medium">{BENTO_GRID_DATA.rewardsCard.rewardAmount}</p>
+                  <p className="text-green-400 font-medium">
+                    {BENTO_GRID_DATA.rewardsCard.rewardAmount}
+                  </p>
                 </div>
               </div>
             </CardContent>
