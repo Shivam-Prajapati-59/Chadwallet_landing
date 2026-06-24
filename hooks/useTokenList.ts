@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import type {
   BirdeyeToken,
   TokenListParams,
@@ -45,27 +45,30 @@ async function fetchTokenList(
 }
 
 /**
- * Custom hook to fetch and cache the Birdeye V3 token list.
+ * Custom hook to fetch and cache the Birdeye V3 token list with infinite scroll.
  *
  * @param params - Optional query parameters (sort, filters, pagination)
  * @param enabled - Whether the query should run (defaults to true)
- *
- * @example
- * ```tsx
- * const { data, isLoading, error } = useTokenList({
- *   sort_by: "volume_24h_usd",
- *   sort_type: "desc",
- *   limit: 20,
- * });
- * ```
  */
 export function useTokenList(
   params: TokenListParams = {},
   enabled: boolean = true
 ) {
-  return useQuery({
+  const limit = params.limit ?? 10;
+
+  return useInfiniteQuery({
     queryKey: ["tokenList", params],
-    queryFn: () => fetchTokenList(params),
+    queryFn: ({ pageParam = 0 }) => 
+      fetchTokenList({ ...params, offset: pageParam, limit }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      // If we received fewer tokens than requested, there are no more pages
+      if (lastPage.tokens.length < limit) {
+        return undefined;
+      }
+      // Otherwise calculate next offset
+      return allPages.length * limit;
+    },
     enabled,
     staleTime: 30 * 1000, // 30 seconds before data is considered stale
     refetchInterval: 60 * 1000, // auto-refetch every 60 seconds

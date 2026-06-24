@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, User, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ConnectWallet from "@/components/custom/ConnectWallet";
 
 const TradingNavbar = () => {
   return (
@@ -34,37 +35,9 @@ const TradingNavbar = () => {
           />
         </div>
 
-        {/* Right: Profile and Deposit */}
+        {/* Right: Connect Wallet */}
         <div className="flex items-center gap-2 shrink-0">
-          <Button
-            variant="default"
-            className="hidden sm:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-black rounded-md font-semibold border-0"
-          >
-            <Wallet className="w-4 h-4" />
-            Deposit
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="sm:hidden text-black bg-green-500 hover:bg-green-600 rounded-md"
-          >
-            <Wallet className="w-4 h-4" />
-          </Button>
-
-          <Button
-            variant="outline"
-            className="hidden sm:flex items-center gap-2 bg-white/5 hover:bg-white/10 rounded-md"
-          >
-            <User className="w-4 h-4" />
-            Profile
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="sm:hidden border bg-white/5 rounded-md"
-          >
-            <User className="w-4 h-4" />
-          </Button>
+          <ConnectWallet />
         </div>
       </div>
     </nav>

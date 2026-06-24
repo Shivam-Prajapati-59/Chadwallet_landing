@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ChadWallet Landing & Trading Dashboard
 
-## Getting Started
+A modern, high-performance web application featuring a sleek landing page and a fully functional cryptocurrency trading dashboard interface. Built for the Solana ecosystem, it seamlessly integrates real-time token data and advanced charting capabilities.
 
-First, run the development server:
+## 🚀 Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Dynamic Trading Dashboard**: A fully responsive, 3-column CSS grid layout providing a professional, dark-themed trading experience locked to the viewport.
+- **Real-Time Token Explorer**: Sidebar powered by the [Birdeye V3 API](https://docs.birdeye.so/) featuring infinite scrolling pagination, market cap formatting, and real-time price change indicators.
+- **Embedded TradingView Charts**: Direct integration with Birdeye's TradingView iframe embed, allowing accurate, on-chain charting for *any* Solana token via its exact contract address.
+- **Interactive Order Panel**: A sleek UI component for Buy/Sell mock interactions, complete with quick-select amounts, dynamic token symbol updates, and unverified token warnings.
+- **Modern Architecture**: Built with the Next.js App Router, styled with Tailwind CSS & Shadcn UI, and utilizing `@tanstack/react-query` for robust API state management and caching.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS + Shadcn UI + Lucide Icons
+- **State Management**: React Query (`@tanstack/react-query`)
+- **Data Provider**: Birdeye API V3
+- **Package Manager**: Bun
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🏁 Getting Started
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+Ensure you have [Bun](https://bun.sh/) installed on your machine.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone the repository and navigate into the directory.
+2. Install dependencies:
+   ```bash
+   bun install
+   ```
+3. Run the development server:
+   ```bash
+   bun run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to explore the landing page and navigate to `/trade` to view the dashboard.
 
-## Deploy on Vercel
+## 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/app` - Next.js App Router pages and API routes
+- `/components` - Reusable UI components and specific dashboard panels (`TokenSidebar`, `TradingViewWidget`, `TradingOrderPanel`)
+- `/hooks` - Custom React Query hooks (e.g., `useTokenList` for infinite scrolling)
+- `/utils` - Helper functions for formatting prices, market caps, and percentages
+- `/types` - TypeScript interfaces for Birdeye API responses

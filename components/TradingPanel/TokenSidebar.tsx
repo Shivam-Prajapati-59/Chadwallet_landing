@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import { TrendingUp, TrendingDown, Loader2 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -20,17 +21,37 @@ const FILTERS = [
   "Bonding",
 ];
 
-const TokenSidebar = () => {
+interface TokenSidebarProps {
+  onSelectToken?: (token: { address: string; symbol: string; logoURI?: string }) => void;
+}
+
+const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
   const [activeFilter, setActiveFilter] = useState("Watchlist");
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
 
-  const { data, isLoading, error } = useTokenList({
+  const { 
+    data, 
+    isLoading, 
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useTokenList({
     sort_by: "volume_24h_usd",
     sort_type: "desc",
     limit: 20,
   });
 
-  const tokens: BirdeyeToken[] = data?.tokens ?? [];
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  // Flatten the pages returned by useInfiniteQuery into a single array
+  const tokens: BirdeyeToken[] = data?.pages.flatMap((page) => page.tokens) ?? [];
 
   return (
     <div className="flex flex-col h-full border rounded-md overflow-hidden">
@@ -108,7 +129,12 @@ const TokenSidebar = () => {
                 return (
                   <TableRow
                     key={token.address || idx}
-                    onClick={() => setSelectedToken(token.address)}
+                    onClick={() => {
+                      setSelectedToken(token.address);
+                      if (onSelectToken && token.address) {
+                        onSelectToken({ address: token.address, symbol: token.symbol, logoURI: token.logo_uri || undefined });
+                      }
+                    }}
                     className="transition-colors group cursor-pointer border-0 hover:bg-transparent"
                   >
                     <TableCell
@@ -175,6 +201,11 @@ const TokenSidebar = () => {
             </TableBody>
           </Table>
         )}
+        <div ref={ref} className="py-4 flex justify-center h-10 shrink-0">
+          {isFetchingNextPage && (
+            <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+          )}
+        </div>
       </div>
     </div>
   );
