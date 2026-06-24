@@ -15,6 +15,7 @@ const LandingPage = () => {
         <HeroSection />
         <FeaturesSection />
         <BentoGrid />
+        <TokenBanner />
         <ClaimSection />
       </main>
       <LandingFooter />

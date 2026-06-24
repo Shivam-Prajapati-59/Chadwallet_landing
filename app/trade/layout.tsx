@@ -35,7 +35,7 @@ export default function TradeLayout({
       className={`${notoSans.variable} ${ibmPlexSans.variable} ${dmSans.variable} font-sans h-screen overflow-hidden bg-[#050816] text-white flex flex-col`}
     >
       <TradingNavbar />
-      <main className="flex-1 ">{children}</main>
+      <main className="flex-1 overflow-y-auto lg:overflow-hidden">{children}</main>
     </div>
   );
 }

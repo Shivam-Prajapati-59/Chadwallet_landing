@@ -20,31 +20,33 @@ const TradingDashboard = () => {
   });
 
   return (
-    <section className="h-full w-full max-w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-[20%_1fr_25%] gap-2">
+    <section className="h-full w-full max-w-full mx-auto p-4 flex flex-col lg:grid lg:grid-cols-[20%_1fr_25%] gap-2 lg:overflow-hidden">
       {/* Left Column: Sidebar */}
-      <div className="h-full min-h-0">
+      <div className="h-[500px] lg:h-full min-h-0 shrink-0">
         <TokenSidebar onSelectToken={(token) => setSelectedToken(token)} />
       </div>
 
       {/* Center Column: Trading View & Order History */}
-      <div className="grid grid-rows-7 gap-2 h-full min-h-0">
+      <div className="flex flex-col lg:grid lg:grid-rows-7 gap-2 lg:h-full min-h-0 shrink-0">
         {/* Trading View (Top) */}
-        <div className="bg-[#050816]/50 border rounded-md row-span-5 min-h-0 relative overflow-hidden">
+        <div className="bg-[#050816]/50 border rounded-md h-[400px] lg:h-auto lg:row-span-5 min-h-0 relative overflow-hidden shrink-0">
           <TradingViewWidget address={selectedToken.address} />
         </div>
 
         {/* Order History (Bottom) */}
-        <div className="row-span-2 min-h-0 rounded-md overflow-hidden">
+        <div className="h-[400px] lg:h-auto lg:row-span-2 min-h-0 rounded-md overflow-hidden shrink-0">
           <TradingHistoryPanel />
         </div>
       </div>
 
       {/* Right Column: Trading Order Panel */}
-      <TradingOrderPanel
-        symbol={selectedToken.symbol}
-        address={selectedToken.address}
-        logoURI={selectedToken.logoURI}
-      />
+      <div className="min-h-[600px] lg:min-h-0 lg:h-full shrink-0">
+        <TradingOrderPanel
+          symbol={selectedToken.symbol}
+          address={selectedToken.address}
+          logoURI={selectedToken.logoURI}
+        />
+      </div>
     </section>
   );
 };
