@@ -1,12 +1,34 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import TradingImage from "../../public/assets/tradingpage.png";
-import SecondSeacrhImage from "@/public/assets/SecondCard.png";
 import DiscoverImage from "@/public/assets/discover.png";
 import { HERO_DATA } from "@/config/landing";
+import { usePrivy } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
+  const { login, authenticated } = usePrivy();
+  const router = useRouter();
+  const [isPendingRedirect, setIsPendingRedirect] = useState(false);
+
+  useEffect(() => {
+    if (isPendingRedirect && authenticated) {
+      router.push("/trade");
+    }
+  }, [authenticated, isPendingRedirect, router]);
+
+  const handlePrimaryCta = () => {
+    if (authenticated) {
+      router.push("/trade");
+    } else {
+      setIsPendingRedirect(true);
+      login();
+    }
+  };
+
   return (
     <div className="relative flex flex-col items-center justify-center px-6 pt-12 pb-20 text-center md:px-10 lg:pt-16 lg:pb-32">
       <h1 className="font-heading text-[38px] font-bold tracking-tighter md:text-5xl lg:text-7xl">
@@ -18,11 +40,12 @@ const HeroSection = () => {
       </p>
       <div className="mt-8 flex flex-col items-center justify-center gap-2 sm:flex-row">
         <Button
+          onClick={handlePrimaryCta}
           className={
             " rounded-[0.8rem] px-8 py-6 text-base font-semibold text-slate-900 transition-opacity hover:opacity-90 border-0"
           }
         >
-          {HERO_DATA.primaryCta}
+          {authenticated ? "Go to Trade Page" : HERO_DATA.primaryCta}
         </Button>
         <Button className="rounded-[0.8rem] px-8 py-6 text-base font-semibold bg-white/10 hover:bg-white/20 text-white border-0 transition-all duration-300">
           {HERO_DATA.secondaryCta}

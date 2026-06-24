@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TokenSidebar from "./TokenSidebar";
 import TradingViewWidget from "./TradingViewWidget";
 import TradingOrderPanel from "./TradingOrderPanel";
@@ -18,6 +18,21 @@ const TradingDashboard = () => {
     logoURI:
       "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
   });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("token");
+      const symbol = params.get("symbol");
+      if (token && symbol) {
+        setSelectedToken({
+          address: token,
+          symbol: symbol,
+          logoURI: `https://ui-avatars.com/api/?name=${symbol}&background=random&size=32`,
+        });
+      }
+    }
+  }, []);
 
   return (
     <section className="h-full w-full max-w-full mx-auto p-4 flex flex-col lg:grid lg:grid-cols-[20%_1fr_25%] gap-2 lg:overflow-hidden">
