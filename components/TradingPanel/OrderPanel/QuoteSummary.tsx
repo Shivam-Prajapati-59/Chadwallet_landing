@@ -1,13 +1,14 @@
 import React from "react";
 import { Loader2 } from "lucide-react";
 import { USDC_LOGO } from "@/utils/constants";
-import { OrderType } from "./OrderTypeTabs";
+import type { OrderType } from "./OrderTypeTabs";
+import type { JupiterQuote } from "@/types/jupiter";
 
 interface QuoteSummaryProps {
   orderType: OrderType;
   amount: string;
   isQuoting: boolean;
-  quote: any;
+  quote: JupiterQuote | undefined;
   limitOutAmount: number;
   limitPrice: string;
   tpPrice: string;
@@ -47,6 +48,7 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
             <Loader2 className="w-4 h-4 animate-spin text-[#14F195]" />
           ) : orderType === "market" && quote?.outAmount ? (
             <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={
                   side === "sell"
@@ -61,6 +63,7 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
             </>
           ) : orderType !== "market" && limitOutAmount > 0 ? (
             <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={
                   side === "sell"
@@ -135,10 +138,10 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
             <span
               className="text-white/80 font-medium truncate max-w-[150px] text-right"
               title={quote.routePlan
-                ?.map((r: any) => r.swapInfo.label)
+                ?.map((r) => r.swapInfo.label)
                 .join(" → ")}
             >
-              {quote.routePlan?.map((r: any) => r.swapInfo.label).join(" → ") ||
+              {quote.routePlan?.map((r) => r.swapInfo.label).join(" → ") ||
                 "Jupiter"}
             </span>
           </div>

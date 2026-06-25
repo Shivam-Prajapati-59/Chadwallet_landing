@@ -23,6 +23,7 @@ const OrderInputSection: React.FC<OrderInputSectionProps> = ({
       <div className="flex justify-between items-center">
         <div className="flex items-center text-3xl font-medium text-white/40">
           <div className="flex items-center gap-2 mr-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={
                 side === "buy"

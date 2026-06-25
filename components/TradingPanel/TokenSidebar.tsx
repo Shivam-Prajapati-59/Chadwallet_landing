@@ -128,7 +128,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
                 const isPositive = token.price_change_24h_percent >= 0;
                 return (
                   <TableRow
-                    key={token.address || idx}
+                    key={`${token.address}-${idx}`}
                     onClick={() => {
                       setSelectedToken(token.address);
                       if (onSelectToken && token.address) {
@@ -146,6 +146,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
                     >
                       <div className="flex items-center gap-3">
                         {token.logo_uri ? (
+                          // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={token.logo_uri}
                             alt={token.symbol}

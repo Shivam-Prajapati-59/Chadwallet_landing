@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { USDC_MINT } from "@/utils/constants";
+import type { JupiterQuote } from "@/types/jupiter";
 import OrderTypeTabs, { OrderType } from "./OrderPanel/OrderTypeTabs";
 import OrderInputSection from "./OrderPanel/OrderInputSection";
 import LimitInputs from "./OrderPanel/LimitInputs";
@@ -55,7 +56,7 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
         ).toString()
       : "";
 
-  const { data: quote, isLoading: isQuoting } = useQuery({
+  const { data: quote, isLoading: isQuoting } = useQuery<JupiterQuote>({
     queryKey: ["jup-quote", inputMint, outputMint, rawAmount],
     queryFn: async () => {
       const res = await fetch(
@@ -77,12 +78,14 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
         (Number(quote.inAmount) / Math.pow(10, inputDecimals))
     : 0;
 
-  // Set default limit price when quote loads and it's empty
+  // Set default limit price when quote loads and limit price is empty
   useEffect(() => {
-    if (marketRate > 0 && !limitPrice && orderType !== "market") {
+    if (marketRate > 0 && orderType !== "market" && limitPrice === "") {
       setLimitPrice(marketRate.toFixed(4));
     }
-  }, [marketRate, orderType, limitPrice]);
+    // Only auto-fill when switching to limit/tpsl mode with an empty price
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marketRate, orderType]);
 
   const limitOutAmount =
     amount && limitPrice && Number(limitPrice) > 0

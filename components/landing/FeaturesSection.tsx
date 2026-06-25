@@ -4,7 +4,7 @@ import { FEATURES_DATA } from "@/config/landing";
 
 const FeaturesSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center">
+    <section id="features" className="flex flex-col items-center justify-center">
       <div className="text-center">
         <h2 className="font-heading mt-2 font-bold text-2xl md:text-4xl lg:text-6xl text-foreground">
           <span>{FEATURES_DATA.heading1}</span>

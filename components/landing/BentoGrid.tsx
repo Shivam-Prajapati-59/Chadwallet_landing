@@ -12,7 +12,7 @@ import { BENTO_GRID_DATA } from "@/config/landing";
 
 export default function BentoGrid() {
   return (
-    <section className="p-8 md:p-12">
+    <section id="protocols" className="p-8 md:p-12">
       <div className="mx-auto flex max-w-7xl flex-col gap-10 md:gap-12">
         <div className="mx-auto flex max-w-xl flex-col items-center text-center gap-4">
           <h2 className="text-3xl md:text-5xl font-bold font-heading">

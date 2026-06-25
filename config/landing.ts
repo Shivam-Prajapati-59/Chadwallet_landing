@@ -1,16 +1,16 @@
 export const NAV_ITEMS = [
   { link: "/", label: "Home" },
-  { link: "about", label: "About" },
-  { link: "features", label: "Workflow" },
-  { link: "protocols", label: "Protocols" },
-  { link: "faq", label: "FAQ" },
+  { link: "#hero", label: "About" },
+  { link: "#features", label: "Workflow" },
+  { link: "#protocols", label: "Protocols" },
+  { link: "#faq", label: "FAQ" },
 ];
 
 export const HERO_DATA = {
   heading1: "Hunt Every Memecoin.",
   heading2: "Every Chain. One Wallet",
   description: "Discover, track, and trade the hottest memecoins across every blockchain from a single powerful wallet.",
-  primaryCta: "Documentation",
+  primaryCta: "Get Started",
   secondaryCta: "Start Trading",
 };
 
@@ -137,10 +137,10 @@ export const FOOTER_DATA = {
       title: "Resources",
       links: [
         { label: "Home", href: "/" },
-        { label: "About", href: "/about" },
-        { label: "Workflow", href: "/features" },
-        { label: "Protocols", href: "/protocols" },
-        { label: "FAQ", href: "/faq" },
+        { label: "About", href: "/#hero" },
+        { label: "Workflow", href: "/#features" },
+        { label: "Protocols", href: "/#protocols" },
+        { label: "FAQ", href: "/#faq" },
       ],
     },
     {

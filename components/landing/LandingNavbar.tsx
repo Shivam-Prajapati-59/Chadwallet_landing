@@ -5,16 +5,37 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Dark_logo from "../../public/assets/dark_logo.png";
 import { NAV_ITEMS } from "@/config/landing";
+import { Button } from "@/components/ui/button";
+import { usePrivy } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 
 export default function LandingNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { login, authenticated } = usePrivy();
+  const router = useRouter();
+  const [isPendingRedirect, setIsPendingRedirect] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (isPendingRedirect && authenticated) {
+      router.push("/trade");
+    }
+  }, [authenticated, isPendingRedirect, router]);
+
+  const handleLogin = () => {
+    if (authenticated) {
+      router.push("/trade");
+    } else {
+      setIsPendingRedirect(true);
+      login();
+    }
+  };
 
   return (
     <nav
@@ -25,7 +46,7 @@ export default function LandingNavbar() {
       <div className="flex items-center justify-between">
         {/* Logo */}
         <Link
-          href="#hero"
+          href="/"
           className="flex items-center gap-2 text-lg font-semibold tracking-tighter text-white no-underline"
         >
           <Image
@@ -53,12 +74,12 @@ export default function LandingNavbar() {
 
         {/* Desktop CTA Buttons */}
         <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href="/login"
-            className="rounded-[0.6rem] bg-white px-5 py-2 text-sm font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-50"
+          <Button
+            onClick={handleLogin}
+            className="rounded-[0.6rem] px-5 py-5 text-sm "
           >
-            Login
-          </Link>
+            {authenticated ? "Trade" : "Login"}
+          </Button>
         </div>
 
         {/* Mobile Hamburger */}
@@ -101,13 +122,15 @@ export default function LandingNavbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/login"
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleLogin();
+              }}
               className="rounded-[0.6rem] bg-white px-5 py-3 text-center text-secondary text-sm font-medium transition-all duration-300 hover:bg-white/80"
-              onClick={() => setMobileMenuOpen(false)}
             >
-              Login
-            </Link>{" "}
+              {authenticated ? "Trade" : "Login"}
+            </button>
           </div>
         </div>
       )}

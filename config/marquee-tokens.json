@@ -1,10 +1,10 @@
 [
   { "symbol": "SOL", "price": "$135.42", "change": "2.5%", "isPositive": true, "address": "So11111111111111111111111111111111111111112" },
-  { "symbol": "JUP", "price": "$1.02", "change": "5.2%", "isPositive": true, "address": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbJedZNiXwS2" },
-  { "symbol": "WIF", "price": "$3.24", "change": "14.1%", "isPositive": true, "address": "EKpQGSJtjMFqKZ9KQanUKKcPiUwP7r9P4XQ6BwMvWjZp" },
+  { "symbol": "USDT", "price": "$1.00", "change": "0.01%", "isPositive": true, "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB" },
   { "symbol": "BONK", "price": "$0.000021", "change": "4.2%", "isPositive": false, "address": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" },
-  { "symbol": "BOME", "price": "$0.015", "change": "15.3%", "isPositive": true, "address": "ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82" },
-  { "symbol": "POPCAT", "price": "$0.45", "change": "8.7%", "isPositive": true, "address": "7GCihgDB8fe6wNa92T6j2s1o94E3k55Z455N3Z28kL8v" },
-  { "symbol": "JTO", "price": "$3.10", "change": "1.4%", "isPositive": false, "address": "jtojtomepa8beP8AuQc6ePABQG1s2ZJ72vP753a4kR5" },
-  { "symbol": "USDC", "price": "$1.00", "change": "0.0%", "isPositive": true, "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" }
+  { "symbol": "RAY", "price": "$1.85", "change": "3.8%", "isPositive": true, "address": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R" },
+  { "symbol": "PYTH", "price": "$0.38", "change": "6.1%", "isPositive": true, "address": "HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3" },
+  { "symbol": "RNDR", "price": "$7.45", "change": "2.9%", "isPositive": true, "address": "rndrizKT3MK1iimdxRdWabcF7Zg7AR5T4nud4EkHBof" },
+  { "symbol": "ORCA", "price": "$4.12", "change": "1.7%", "isPositive": false, "address": "orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE" },
+  { "symbol": "HNT", "price": "$5.20", "change": "3.3%", "isPositive": true, "address": "hntyVP6YFm1Hg25TN9WGLqM12b8TQmcknKrdu1oxWux" }
 ]

@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { OrderType } from "./OrderTypeTabs";
+import type { OrderType } from "./OrderTypeTabs";
+import type { JupiterQuote } from "@/types/jupiter";
 
 interface OrderActionButtonProps {
   orderType: OrderType;
   amount: string;
   isQuoting: boolean;
-  quote: any;
+  quote: JupiterQuote | undefined;
   limitOutAmount: number;
   limitPrice: string;
   tpPrice: string;
