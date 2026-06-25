@@ -29,11 +29,18 @@ Ensure you have [Bun](https://bun.sh/) installed on your machine.
 1. Clone the repository and navigate into the directory.
 2. Install dependencies:
    ```bash
-   bun install
+   npm install
    ```
-3. Run the development server:
+3. Set up environment variables:
+   - Copy the example environment file:
+     ```bash
+     cp .env.example .env.local
+     ```
+   - Open `.env.local` and add your actual API keys for Privy and Birdeye.
+
+4. Run the development server:
    ```bash
-   bun run dev
+   npm run dev
    ```
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to explore the landing page and navigate to `/trade` to view the dashboard.
 
