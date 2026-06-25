@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import TokenSidebar from "./TokenSidebar";
 import TradingViewWidget from "./TradingViewWidget";
 import TradingOrderPanel from "./TradingOrderPanel";
@@ -9,6 +9,8 @@ import TradingHistoryPanel from "./TradingHistoryPanel";
 
 const TradingDashboard = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Default to Wrapped SOL
   const [selectedToken, setSelectedToken] = useState<{
@@ -34,11 +36,17 @@ const TradingDashboard = () => {
     }
   }, [searchParams]);
 
+  const handleSelectToken = (token: { address: string; symbol: string; logoURI?: string }) => {
+    setSelectedToken(token);
+    // Sync the URL with the newly selected token
+    router.replace(`${pathname}?token=${token.address}&symbol=${token.symbol}`, { scroll: false });
+  };
+
   return (
     <section className="h-full w-full max-w-full mx-auto p-4 flex flex-col lg:grid lg:grid-cols-[20%_1fr_25%] gap-2 lg:overflow-hidden">
       {/* Left Column: Sidebar */}
       <div className="h-[500px] lg:h-full min-h-0 shrink-0">
-        <TokenSidebar onSelectToken={(token) => setSelectedToken(token)} />
+        <TokenSidebar onSelectToken={handleSelectToken} />
       </div>
 
       {/* Center Column: Trading View & Order History */}
