@@ -12,6 +12,7 @@ import TPSLInputs from "./OrderPanel/TPSLInputs";
 import QuoteSummary from "./OrderPanel/QuoteSummary";
 import OrderActionButton from "./OrderPanel/OrderActionButton";
 import { Separator } from "../ui/separator";
+import { useBirdeyeWebSocket } from "@/hooks/useBirdeyeWebSocket";
 
 interface TradingOrderPanelProps {
   symbol: string;
@@ -32,6 +33,24 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
   const [slPrice, setSlPrice] = useState<string>("");
 
   const [debouncedAmount, setDebouncedAmount] = useState<string>("");
+
+  const { livePrice, isConnected } = useBirdeyeWebSocket(address);
+  const [flashColor, setFlashColor] = useState<string>("text-white");
+  const prevPriceRef = React.useRef<number | null>(null);
+
+  useEffect(() => {
+    if (livePrice && prevPriceRef.current) {
+      if (livePrice > prevPriceRef.current) {
+        setFlashColor("text-green-500");
+      } else if (livePrice < prevPriceRef.current) {
+        setFlashColor("text-red-500");
+      }
+      const timer = setTimeout(() => setFlashColor("text-white"), 800);
+      prevPriceRef.current = livePrice;
+      return () => clearTimeout(timer);
+    }
+    prevPriceRef.current = livePrice;
+  }, [livePrice]);
 
   // Debounce the amount input to avoid spamming the API
   useEffect(() => {
@@ -95,7 +114,7 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
       : 0;
 
   return (
-    <Card className="flex flex-col h-full bg-background rounded-md">
+    <Card className="flex flex-col h-full bg-background border rounded-md">
       <CardContent className="flex flex-col flex-1 p-4 space-y-4">
         {/* Top Tabs: Buy / Sell */}
         <div className="flex w-full gap-2">
@@ -150,9 +169,30 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
           />
         )}
         <Separator />
-        {/* Available Balance */}
-        <div className="text-sm font-medium text-white/50 px-1">
-          $0 available
+        <div className="flex justify-between items-center px-1">
+          <div className="text-sm font-medium text-white/50">$0 available</div>
+          <div className="flex items-center gap-2">
+            {isConnected && !livePrice && (
+              <span className="text-xs text-muted-foreground animate-pulse">
+                Connecting WS...
+              </span>
+            )}
+            {livePrice && (
+              <div className="flex flex-col items-end">
+                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider mb-0.5">
+                  Live Price
+                </span>
+                <span
+                  className={`font-mono text-sm transition-colors duration-300 ${flashColor}`}
+                >
+                  $
+                  {livePrice.toLocaleString(undefined, {
+                    maximumFractionDigits: 6,
+                  })}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
 
         <QuoteSummary

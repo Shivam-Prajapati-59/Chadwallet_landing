@@ -2,7 +2,9 @@ import TradingDashboard from "@/components/TradingPanel/TradingDashboard";
 
 const page = () => {
   return (
-    <div className="min-h-max lg:min-h-0 lg:h-[850px] w-full flex flex-col">
+    // Replaced hardcoded h-[850px] with h-full.
+    // Added overflow-y-auto for mobile scrolling, and lg:overflow-hidden to lock desktop.
+    <div className="h-full w-full flex flex-col overflow-y-auto lg:overflow-hidden">
       <TradingDashboard />
     </div>
   );

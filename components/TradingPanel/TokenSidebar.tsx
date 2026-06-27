@@ -10,7 +10,12 @@ import { Button } from "@/components/ui/button";
 import { useTokenList } from "@/hooks/useTokenList";
 import type { BirdeyeToken } from "@/types/birdeye";
 
-import { formatPrice, formatMarketCap, formatPercent } from "@/utils/formatters";
+import {
+  formatPrice,
+  formatMarketCap,
+  formatPercent,
+} from "@/utils/formatters";
+import { Separator } from "../ui/separator";
 
 const FILTERS = [
   "Watchlist",
@@ -22,20 +27,24 @@ const FILTERS = [
 ];
 
 interface TokenSidebarProps {
-  onSelectToken?: (token: { address: string; symbol: string; logoURI?: string }) => void;
+  onSelectToken?: (token: {
+    address: string;
+    symbol: string;
+    logoURI?: string;
+  }) => void;
 }
 
 const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
   const [activeFilter, setActiveFilter] = useState("Watchlist");
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
 
-  const { 
-    data, 
-    isLoading, 
+  const {
+    data,
+    isLoading,
     error,
     fetchNextPage,
     hasNextPage,
-    isFetchingNextPage
+    isFetchingNextPage,
   } = useTokenList({
     sort_by: "volume_24h_usd",
     sort_type: "desc",
@@ -51,24 +60,28 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   // Flatten the pages returned by useInfiniteQuery into a single array
-  const tokens: BirdeyeToken[] = data?.pages.flatMap((page) => page.tokens) ?? [];
+  const tokens: BirdeyeToken[] =
+    data?.pages.flatMap((page) => page.tokens) ?? [];
 
   return (
     <div className="flex flex-col h-full border rounded-md overflow-hidden">
       {/* Top Header Tabs */}
-      <div className="p-3">
-        <Tabs defaultValue="tokens" className="w-full">
-          <TabsList className="w-full bg-background/80">
-            <TabsTrigger value="alerts" className="py-3 rounded-md">
+      <div className="">
+        <Tabs defaultValue="tokens" className="w-full p-2">
+          <TabsList className="w-full bg-background flex overflow-x-auto scrollbar-none justify-start">
+            <TabsTrigger value="alerts" className="py-3 rounded-md shrink-0">
               Alerts
             </TabsTrigger>
-            <TabsTrigger value="tokens" className="py-3 rounded-md">
+            <TabsTrigger value="tokens" className="py-3 rounded-md shrink-0">
               Tokens
             </TabsTrigger>
-            <TabsTrigger value="leaderboard" className="py-3 rounded-md">
+            <TabsTrigger
+              value="leaderboard"
+              className="py-3 rounded-md shrink-0"
+            >
               Leaderboard
             </TabsTrigger>
-            <TabsTrigger value="feed" className="py-3 rounded-md">
+            <TabsTrigger value="feed" className="py-3 rounded-md shrink-0">
               Feed
             </TabsTrigger>
           </TabsList>
@@ -76,7 +89,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
       </div>
 
       {/* Filters Scroll Area */}
-      <div className="px-3 py-2">
+      <div className="px-3 py-2 overflow-hidden">
         <ScrollArea className="w-full whitespace-nowrap">
           <div className="flex w-max space-x-1">
             {FILTERS.map((filter) => (
@@ -85,7 +98,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
                 variant={activeFilter === filter ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => setActiveFilter(filter)}
-                className={`text-sm rounded-md transition-all ${
+                className={`text-sm rounded-md transition-all shrink-0 ${
                   activeFilter === filter
                     ? "text-primary-foreground font-semibold"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -100,7 +113,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
       </div>
 
       {/* Table Content */}
-      <div className="flex-1 px-2 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
+      <div className="flex-1 px-2 overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
@@ -121,86 +134,94 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
             </span>
           </div>
         ) : (
-          <Table className="border-spacing-y-1">
-            <TableBody>
-              {tokens.map((token, idx) => {
-                const isSelected = selectedToken === token.address;
-                const isPositive = token.price_change_24h_percent >= 0;
-                return (
-                  <TableRow
-                    key={`${token.address}-${idx}`}
-                    onClick={() => {
-                      setSelectedToken(token.address);
-                      if (onSelectToken && token.address) {
-                        onSelectToken({ address: token.address, symbol: token.symbol, logoURI: token.logo_uri || undefined });
-                      }
-                    }}
-                    className="transition-colors group cursor-pointer border-0 hover:bg-transparent"
-                  >
-                    <TableCell
-                      className={`p-3 align-middle rounded-l-xl transition-colors ${
-                        isSelected
-                          ? "bg-secondary/70"
-                          : "group-hover:bg-secondary/40"
-                      }`}
+          <div className="w-full overflow-hidden">
+            <Table className="border-spacing-y-1 table-fixed w-full">
+              <TableBody>
+                {tokens.map((token, idx) => {
+                  const isSelected = selectedToken === token.address;
+                  const isPositive = token.price_change_24h_percent >= 0;
+                  return (
+                    <TableRow
+                      key={`${token.address}-${idx}`}
+                      onClick={() => {
+                        setSelectedToken(token.address);
+                        if (onSelectToken && token.address) {
+                          onSelectToken({
+                            address: token.address,
+                            symbol: token.symbol,
+                            logoURI: token.logo_uri || undefined,
+                          });
+                        }
+                      }}
+                      className="transition-colors group cursor-pointer border-0 hover:bg-transparent"
                     >
-                      <div className="flex items-center gap-3">
-                        {token.logo_uri ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={token.logo_uri}
-                            alt={token.symbol}
-                            className="w-8 h-8 rounded-full bg-secondary shrink-0 object-cover"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                `https://ui-avatars.com/api/?name=${token.symbol}&background=random&size=32`;
-                            }}
-                          />
-                        ) : (
-                          <div className="w-8 h-8 rounded-full bg-secondary shrink-0 flex items-center justify-center text-xs font-bold text-foreground">
-                            {token.symbol?.charAt(0) ?? "?"}
+                      <TableCell
+                        className={`py-2 px-1 sm:p-3 align-middle rounded-l-xl transition-colors w-[55%] sm:w-[60%] overflow-hidden ${
+                          isSelected
+                            ? "bg-secondary/70"
+                            : "group-hover:bg-secondary/40"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
+                          {token.logo_uri ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={token.logo_uri}
+                              alt={token.symbol}
+                              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-secondary shrink-0 object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  `https://ui-avatars.com/api/?name=${token.symbol}&background=random&size=32`;
+                              }}
+                            />
+                          ) : (
+                            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-secondary shrink-0 flex items-center justify-center text-xs font-bold text-foreground">
+                              {token.symbol?.charAt(0) ?? "?"}
+                            </div>
+                          )}
+                          <div className="flex flex-col min-w-0">
+                            <span className="font-bold text-sm tracking-tight group-hover:text-primary transition-colors text-foreground truncate max-w-[90px] sm:max-w-full">
+                              {token.symbol}
+                            </span>
+                            <span className="text-[11px] sm:text-xs text-muted-foreground font-medium truncate">
+                              {formatPrice(token.price)}
+                            </span>
                           </div>
-                        )}
-                        <div className="flex flex-col">
-                          <span className="font-bold text-sm tracking-tight group-hover:text-primary transition-colors text-foreground truncate max-w-[80px]">
-                            {token.symbol}
+                        </div>
+                      </TableCell>
+                      <TableCell
+                        className={`py-2 px-1 sm:p-3 text-right align-middle rounded-r-xl transition-colors w-[45%] sm:w-[40%] overflow-hidden ${
+                          isSelected
+                            ? "bg-secondary/70"
+                            : "group-hover:bg-secondary/40"
+                        }`}
+                      >
+                        <div className="flex flex-col items-end gap-0.5 min-w-0">
+                          <span className="font-semibold text-[13px] sm:text-sm text-foreground truncate w-full text-right">
+                            {formatMarketCap(token.market_cap)}
                           </span>
-                          <span className="text-xs text-muted-foreground font-medium">
-                            {formatPrice(token.price)}
+                          <span
+                            className={`font-medium text-[11px] sm:text-xs flex items-center justify-end gap-1 w-full truncate ${
+                              isPositive ? "text-green-500" : "text-destructive"
+                            }`}
+                          >
+                            {isPositive ? (
+                              <TrendingUp className="w-3 h-3 shrink-0" />
+                            ) : (
+                              <TrendingDown className="w-3 h-3 shrink-0" />
+                            )}
+                            <span className="truncate">
+                              {formatPercent(token.price_change_24h_percent)}
+                            </span>
                           </span>
                         </div>
-                      </div>
-                    </TableCell>
-                    <TableCell
-                      className={`p-3 text-right align-middle rounded-r-xl transition-colors ${
-                        isSelected
-                          ? "bg-secondary/70"
-                          : "group-hover:bg-secondary/40"
-                      }`}
-                    >
-                      <div className="flex flex-col items-end gap-0.5">
-                        <span className="font-semibold text-sm text-foreground">
-                          {formatMarketCap(token.market_cap)}
-                        </span>
-                        <span
-                          className={`font-medium text-xs flex items-center gap-1 ${
-                            isPositive ? "text-green-500" : "text-destructive"
-                          }`}
-                        >
-                          {isPositive ? (
-                            <TrendingUp className="w-3 h-3" />
-                          ) : (
-                            <TrendingDown className="w-3 h-3" />
-                          )}
-                          {formatPercent(token.price_change_24h_percent)}
-                        </span>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
         )}
         <div ref={ref} className="py-4 flex justify-center h-10 shrink-0">
           {isFetchingNextPage && (
