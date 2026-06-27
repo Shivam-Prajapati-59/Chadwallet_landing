@@ -57,6 +57,9 @@ export interface BirdeyeToken {
   price_change_24h_percent: number;
   volume_24h_usd: number;
   volume_1h_usd: number;
+  volume_buy_24h_usd?: number;
+  volume_sell_24h_usd?: number;
+  total_supply?: number;
   trade_24h_count: number;
   trade_1h_count: number;
   last_trade_unix_time: number;

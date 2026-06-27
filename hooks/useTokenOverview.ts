@@ -1,48 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
 
-interface DexScreenerPair {
-  chainId: string;
-  dexId: string;
-  url: string;
-  pairAddress: string;
-  baseToken: {
-    address: string;
-    name: string;
-    symbol: string;
-  };
-  quoteToken: {
-    address: string;
-    name: string;
-    symbol: string;
-  };
-  priceNative: string;
-  priceUsd: string;
-  txns: {
-    m5: { buys: number; sells: number };
-    h1: { buys: number; sells: number };
-    h6: { buys: number; sells: number };
-    h24: { buys: number; sells: number };
-  };
-  volume: {
-    h24: number;
-    h6: number;
-    h1: number;
-    m5: number;
-  };
+export interface TokenOverview {
+  address: string;
+  priceUsd: number;
+  marketCap: number;
+  fdv: number;
+  totalSupply: number;
+  circulatingSupply: number;
+  liquidity: number;
+  holders: number;
   priceChange: {
     m5: number;
     h1: number;
-    h6: number;
+    h4: number;
     h24: number;
   };
-  liquidity: {
-    usd: number;
-    base: number;
-    quote: number;
+  volume: {
+    m5: number;
+    h1: number;
+    h4: number;
+    h24: number;
   };
-  fdv: number;
-  marketCap: number;
-  pairCreatedAt: number;
+  txns: {
+    m5: { buys: number; sells: number; buyVolume: number; sellVolume: number };
+    h1: { buys: number; sells: number; buyVolume: number; sellVolume: number };
+    h4: { buys: number; sells: number; buyVolume: number; sellVolume: number };
+    h24: { buys: number; sells: number; buyVolume: number; sellVolume: number };
+  };
 }
 
 export function useTokenOverview(address: string) {
@@ -51,30 +35,17 @@ export function useTokenOverview(address: string) {
     queryFn: async () => {
       if (!address) return null;
       
-      const res = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${address}`);
-      if (!res.ok) throw new Error("Failed to fetch token overview");
-      
-      const data = await res.json();
-      
-      if (!data.pairs || data.pairs.length === 0) {
-        return null;
+      const res = await fetch(`/api/token-overview?address=${address}`);
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.error || "Failed to fetch token overview");
       }
 
-      // Find the most liquid Solana pair for this token
-      const solanaPairs = data.pairs.filter((p: DexScreenerPair) => p.chainId === "solana");
-      if (solanaPairs.length === 0) return null;
-      
-      // Sort by liquidity
-      solanaPairs.sort((a: DexScreenerPair, b: DexScreenerPair) => {
-        const liqA = a.liquidity?.usd || 0;
-        const liqB = b.liquidity?.usd || 0;
-        return liqB - liqA;
-      });
-
-      return solanaPairs[0] as DexScreenerPair;
+      return data.data as TokenOverview;
     },
     enabled: !!address,
-    staleTime: 10 * 1000,
-    refetchInterval: 30 * 1000,
+    refetchInterval: 15000, // Refresh every 15s to keep it real-time
+    staleTime: 10000,
   });
 }

@@ -117,14 +117,14 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
     <Card className="flex flex-col h-full bg-background border rounded-md">
       <CardContent className="flex flex-col flex-1 p-4 space-y-4">
         {/* Top Tabs: Buy / Sell */}
-        <div className="flex w-full gap-2">
+        <div className="flex w-full gap-2 px-1">
           <Button
             variant="ghost"
             onClick={() => setSide("buy")}
-            className={`flex-1 p-3 h-auto text-xl font-semibold rounded-md transition-colors ${
+            className={`flex-1 h-12 text-[15px] font-bold rounded-lg transition-colors ${
               side === "buy"
-                ? "bg-green-900/30 text-green-600 hover:text-green-700"
-                : "text-muted-foreground hover:text-white hover:bg-white/5"
+                ? "bg-[#1b3323] text-[#2cc461] hover:bg-[#1b3323]/80 hover:text-[#2cc461]"
+                : "bg-[#12141a] text-[#8e8e93] hover:text-white"
             }`}
           >
             Buy
@@ -132,17 +132,17 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
           <Button
             variant="ghost"
             onClick={() => setSide("sell")}
-            className={`flex-1 p-3 h-auto text-xl font-semibold rounded-md transition-colors ${
+            className={`flex-1 h-12 text-[15px] font-bold rounded-lg transition-colors ${
               side === "sell"
-                ? "bg-red-900/30 text-red-500 hover:bg-red-900/40 hover:text-red-400"
-                : "text-muted-foreground hover:text-white hover:bg-white/5"
+                ? "bg-[#331b1b] text-[#c42c2c] hover:bg-[#331b1b]/80 hover:text-[#c42c2c]"
+                : "bg-[#12141a] text-[#8e8e93] hover:text-white"
             }`}
           >
             Sell
           </Button>
         </div>
 
-        <OrderTypeTabs orderType={orderType} setOrderType={setOrderType} />
+
 
         <OrderInputSection
           side={side}
@@ -168,31 +168,8 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
             setSlPrice={setSlPrice}
           />
         )}
-        <Separator />
-        <div className="flex justify-between items-center px-1">
-          <div className="text-sm font-medium text-white/50">$0 available</div>
-          <div className="flex items-center gap-2">
-            {isConnected && !livePrice && (
-              <span className="text-xs text-muted-foreground animate-pulse">
-                Connecting WS...
-              </span>
-            )}
-            {livePrice && (
-              <div className="flex flex-col items-end">
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider mb-0.5">
-                  Live Price
-                </span>
-                <span
-                  className={`font-mono text-sm transition-colors duration-300 ${flashColor}`}
-                >
-                  $
-                  {livePrice.toLocaleString(undefined, {
-                    maximumFractionDigits: 6,
-                  })}
-                </span>
-              </div>
-            )}
-          </div>
+        <div className="flex justify-between items-center px-2 pt-2">
+          <div className="text-[13px] font-semibold text-[#a0a0a0]">Balance unavailable</div>
         </div>
 
         <QuoteSummary
@@ -226,13 +203,15 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
         />
       </CardContent>
 
-      <CardFooter className="p-4 pt-2 bg-background">
-        <div className="flex w-full items-center justify-between text-xs font-medium text-white/40 px-1">
-          <div className="flex items-center gap-1.5">
-            <AlertTriangle className="w-4 h-4" />
-            <span>Verified token</span>
+      <CardFooter className="p-4 pt-1 pb-4 bg-background">
+        <div className="flex w-full items-center justify-between text-[11px] font-bold px-1">
+          <div className="flex items-center gap-1.5 text-[#4f67ff]">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
+            </svg>
+            <span>Lowest fees: 0.1%</span>
           </div>
-          <Info className="w-4 h-4" />
+          <Info className="w-[14px] h-[14px] text-white/30" />
         </div>
       </CardFooter>
     </Card>

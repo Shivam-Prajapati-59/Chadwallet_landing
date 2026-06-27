@@ -38,12 +38,12 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
   if (Number(amount) <= 0) return null;
 
   return (
-    <div className="flex flex-col gap-2 p-3 bg-white/5 rounded-md border border-white/10">
-      <div className="flex justify-between items-center text-sm">
-        <span className="font-medium text-md">
+    <div className="flex flex-col gap-1.5 p-2 bg-[#111319] rounded-lg border-none mt-1">
+      <div className="flex justify-between items-center text-[11px]">
+        <span className="font-semibold text-white/40">
           {orderType === "market" ? "Expected Output:" : "Target Output:"}
         </span>
-        <span className="font-mono text-[#14F195] font-medium text-xl flex items-center gap-2">
+        <span className="font-mono text-[#2cc461] font-bold text-[13px] flex items-center gap-1.5">
           {isQuoting && orderType === "market" ? (
             <Loader2 className="w-4 h-4 animate-spin text-[#14F195]" />
           ) : orderType === "market" && quote?.outAmount ? (
@@ -57,7 +57,7 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
                       `https://ui-avatars.com/api/?name=${symbol}&background=random&size=32`
                 }
                 alt={side === "sell" ? "USDC" : symbol}
-                className="w-7 h-7 rounded-full"
+                className="w-5 h-5 rounded-full"
               />
               {`${(Number(quote.outAmount) / Math.pow(10, outputDecimals)).toLocaleString(undefined, { maximumFractionDigits: 4 })} ${side === "buy" ? symbol : "USDC"}`}
             </>
@@ -72,7 +72,7 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
                       `https://ui-avatars.com/api/?name=${symbol}&background=random&size=32`
                 }
                 alt={side === "sell" ? "USDC" : symbol}
-                className="w-7 h-7 rounded-full"
+                className="w-5 h-5 rounded-full"
               />
               {`${limitOutAmount.toLocaleString(undefined, { maximumFractionDigits: 4 })} ${side === "buy" ? symbol : "USDC"}`}
             </>
@@ -84,7 +84,7 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
 
       {/* Extended Details */}
       {orderType === "market" && quote?.outAmount && !isQuoting && (
-        <div className="flex flex-col gap-1.5 mt-2 pt-3 border-t border-white/10 text-sm text-white/50">
+        <div className="flex flex-col gap-1 mt-1 pt-2 border-t border-white/5 text-[10px] text-white/40 font-medium">
           <div className="flex justify-between">
             <span>Rate:</span>
             <span className="text-white/80 font-medium">
@@ -134,38 +134,24 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
             </span>
           </div>
           <div className="flex justify-between">
-            <span>Route:</span>
-            <span
-              className="text-white/80 font-medium truncate max-w-[150px] text-right"
-              title={quote.routePlan
-                ?.map((r) => r.swapInfo.label)
-                .join(" → ")}
-            >
-              {quote.routePlan?.map((r) => r.swapInfo.label).join(" → ") ||
-                "Jupiter"}
+            <span>Est. USD Value:</span>
+            <span className="text-white/80 font-medium">
+              ~$
+              {Number(quote.swapUsdValue).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </span>
           </div>
-          {quote.swapUsdValue && (
-            <div className="flex justify-between">
-              <span>Est. USD Value:</span>
-              <span className="text-white/80 font-medium">
-                ~$
-                {Number(quote.swapUsdValue).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </span>
-            </div>
-          )}
         </div>
       )}
 
       {/* Limit / TPSL Details */}
       {orderType !== "market" && limitOutAmount > 0 && (
-        <div className="flex flex-col gap-1.5 mt-2 pt-3 border-t border-white/10 text-sm text-white/50">
+        <div className="flex flex-col gap-1 mt-1 pt-2 border-t border-white/5 text-[10px] text-white/40 font-medium">
           <div className="flex justify-between">
             <span>Execution Price:</span>
-            <span className="text-white/80 font-medium">
+            <span className="text-white/80">
               1 {side === "buy" ? symbol : "USDC"} ={" "}
               {Number(limitPrice).toLocaleString(undefined, {
                 maximumFractionDigits: 4,

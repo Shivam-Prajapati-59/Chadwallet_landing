@@ -6,7 +6,8 @@ import TokenSidebar from "./TokenSidebar";
 import TradingViewWidget from "./TradingViewWidget";
 import TradingOrderPanel from "./TradingOrderPanel";
 import TradingHistoryPanel from "./TradingHistoryPanel";
-import TradingHeader from "./TradingHeader"; // <-- Import verified
+import TradingHeader from "./TradingHeader";
+import AboutTokenPanel from "./AboutTokenPanel";
 
 const TradingDashboard = () => {
   const searchParams = useSearchParams();
@@ -36,9 +37,7 @@ const TradingDashboard = () => {
         return {
           address: token,
           symbol: symbol,
-          logoURI: logoURI
-            ? decodeURIComponent(logoURI)
-            : `https://ui-avatars.com/api/?name=${symbol}&background=random&size=32`,
+          logoURI: logoURI ? decodeURIComponent(logoURI) : prev.logoURI,
         };
       });
     }
@@ -54,9 +53,6 @@ const TradingDashboard = () => {
     const params = new URLSearchParams();
     params.set("token", token.address);
     params.set("symbol", token.symbol);
-    if (token.logoURI) {
-      params.set("logoURI", token.logoURI);
-    }
 
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
@@ -93,12 +89,16 @@ const TradingDashboard = () => {
         </div>
       </div>
 
-      {/* Right Column: Trading Order Panel */}
-      <div className="h-auto lg:h-full min-h-0 min-w-0 flex flex-col overflow-hidden z-20 shrink-0 lg:shrink">
+      {/* Right Column: Trading Order Panel & About Token */}
+      <div className="h-auto lg:h-full min-h-0 min-w-0 flex flex-col overflow-y-auto custom-scrollbar z-20 shrink-0 lg:shrink pb-4 pr-1">
         <TradingOrderPanel
           symbol={selectedToken.symbol}
           address={selectedToken.address}
           logoURI={selectedToken.logoURI}
+        />
+        <AboutTokenPanel
+          symbol={selectedToken.symbol}
+          address={selectedToken.address}
         />
       </div>
     </section>

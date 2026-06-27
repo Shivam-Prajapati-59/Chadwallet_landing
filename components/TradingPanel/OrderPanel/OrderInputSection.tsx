@@ -13,60 +13,47 @@ interface OrderInputSectionProps {
 
 const OrderInputSection: React.FC<OrderInputSectionProps> = ({
   side,
-  symbol,
-  logoURI,
   amount,
   setAmount,
 }) => {
   return (
-    <div className="flex flex-col space-y-3 bg-[#0a0d16] p-4 rounded-xl border border-white/10">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center text-3xl font-medium text-white/40">
-          <div className="flex items-center gap-2 mr-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={
-                side === "buy"
-                  ? USDC_LOGO
-                  : logoURI ||
-                    `https://ui-avatars.com/api/?name=${symbol}&background=random&size=32`
-              }
-              alt={side === "buy" ? "USDC" : symbol}
-              className="w-12 h-9 rounded-full"
-            />
-          </div>
-          {side === "buy" && <span>$</span>}
+    <div className="flex flex-col space-y-4 bg-[#111319] p-2 rounded-xl border-none">
+      <div className="flex justify-between items-center px-1">
+        <div className="flex items-center text-[32px] font-bold text-white/40 w-1/2">
+          {side === "buy" && <span className="text-white/40 mr-1">$</span>}
           <input
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="0"
-            className="bg-transparent border-none outline-none w-full text-white/90 placeholder:text-white/40 ml-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            className="bg-transparent border-none outline-none w-full text-white/90 placeholder:text-white/40 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
         </div>
-        <span className="text-md font-medium text-white/30 whitespace-nowrap">
+        <span className="text-sm font-semibold text-white/30 whitespace-nowrap">
           Enter amount
         </span>
       </div>
 
       {/* Quick amounts */}
-      <div className="flex gap-2 items-center pt-2">
+      <div className="flex gap-2 items-center">
         {[10, 100, 500, 1000].map((val) => (
           <Button
             key={val}
-            variant="outline"
+            variant="ghost"
             onClick={() => setAmount(val.toString())}
-            className="flex-1 h-8 bg-transparent border-white/10 hover:bg-white/10 text-xs font-semibold text-white/70"
+            className="flex-1 h-9 bg-[#1a1c24] hover:bg-[#232631] text-[13px] font-bold text-white/70 rounded-lg transition-colors"
           >
-            ${val}
+            {side === "buy" ? "$" : ""}
+            {val}
           </Button>
         ))}
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
-          className="h-8 w-8 shrink-0 bg-transparent border-white/10 hover:bg-white/10 text-white/70"
+          aria-label="Order Settings"
+          className="h-9 w-9 shrink-0 bg-[#1a1c24] hover:bg-[#232631] text-white/50 rounded-lg transition-colors"
         >
-          <Settings className="w-4 h-4" />
+          <Settings className="w-[18px] h-[18px]" />
         </Button>
       </div>
     </div>

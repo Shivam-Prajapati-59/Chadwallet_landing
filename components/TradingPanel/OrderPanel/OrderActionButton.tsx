@@ -18,16 +18,31 @@ interface OrderActionButtonProps {
 }
 
 const OrderActionButton: React.FC<OrderActionButtonProps> = ({
-  orderType, amount, isQuoting, quote, limitOutAmount, limitPrice, tpPrice, slPrice, side, symbol, outputDecimals
+  orderType,
+  amount,
+  isQuoting,
+  quote,
+  limitOutAmount,
+  limitPrice,
+  tpPrice,
+  slPrice,
+  side,
+  symbol,
+  outputDecimals,
 }) => {
-  const isDisabled = 
+  const isDisabled =
     (orderType === "market" && (isQuoting || !amount || Number(amount) <= 0)) ||
-    (orderType === "limit" && (!amount || Number(amount) <= 0 || !limitPrice || Number(limitPrice) <= 0)) ||
-    (orderType === "tpsl" && (!amount || Number(amount) <= 0 || (!tpPrice && !slPrice)));
+    (orderType === "limit" &&
+      (!amount ||
+        Number(amount) <= 0 ||
+        !limitPrice ||
+        Number(limitPrice) <= 0)) ||
+    (orderType === "tpsl" &&
+      (!amount || Number(amount) <= 0 || (!tpPrice && !slPrice)));
 
   let buttonText = "";
   if (!amount || Number(amount) <= 0) {
-    buttonText = "Enter Amount";
+    buttonText = `${side === "buy" ? "Buy" : "Sell"} ${symbol}`;
   } else if (orderType === "market" && isQuoting) {
     buttonText = "Finding best route...";
   } else if (orderType === "market") {
@@ -47,11 +62,11 @@ const OrderActionButton: React.FC<OrderActionButtonProps> = ({
   return (
     <Button
       disabled={isDisabled}
-      className={`w-full py-6 mt-auto rounded-xl border-none font-bold text-lg transition-colors ${
+      className={`w-full py-4 mt-auto rounded-md border-none font-bold text-[17px] transition-colors ${
         isDisabled
-          ? "bg-white/10 text-white/40 cursor-not-allowed"
+          ? "bg-[#181920] text-white/70 opacity-100 cursor-not-allowed hover:bg-[#181920]"
           : side === "buy"
-            ? "bg-[#14F195] hover:bg-[#14F195]/80 text-black"
+            ? "bg-green-500 hover:bg-green-400 text-black"
             : "bg-[#a90b0b] hover:bg-[#8d0a0a] text-white"
       }`}
     >

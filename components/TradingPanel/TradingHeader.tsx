@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import {
   Copy,
   Globe,
   Search,
-  Star,
+  Send,
   ExternalLink,
   CircleCheckBig,
 } from "lucide-react";
@@ -40,31 +41,54 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
   const tokenListDetails = allTokens.find((t) => t.address === address);
 
   const [copied, setCopied] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
-  // Derive real values
-  const rawMarketCap = tokenListDetails?.market_cap || tokenOverview?.marketCap || tokenOverview?.fdv;
+  const getSafeUrl = (url: string | undefined) => {
+    if (!url) return undefined;
+    try {
+      const parsed = new URL(url);
+      if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+        return parsed.toString();
+      }
+    } catch {
+      // invalid URL
+    }
+    return undefined;
+  };
+
+  const exts = tokenListDetails?.extensions as any;
+  const website = getSafeUrl(exts?.website || exts?.websiteUrl);
+  const twitter = getSafeUrl(exts?.twitter || exts?.twitterUrl);
+  const telegram = getSafeUrl(exts?.telegram || exts?.telegramUrl);
+
+  // Derive real values from new global API
+  const rawMarketCap = tokenOverview?.marketCap || tokenOverview?.fdv || tokenListDetails?.market_cap;
+  const finalLogoURI = logoURI || tokenListDetails?.logo_uri || `https://ui-avatars.com/api/?name=${symbol}&background=random&size=40`;
+  
+  React.useEffect(() => {
+    setImgError(false);
+  }, [finalLogoURI]);
   const displayMarketCap = rawMarketCap ? formatMarketCap(rawMarketCap) : "-";
 
   // Real-time 24h change from API data
-  const change24h = tokenOverview?.priceChange?.h24 ?? tokenListDetails?.price_change_24h_percent ?? 0;
+  const change24h = tokenOverview?.priceChange?.h24 || tokenListDetails?.price_change_24h_percent || 0;
   const isPositiveChange = change24h >= 0;
 
   const displayVolume = tokenOverview?.volume?.h24
     ? formatMarketCap(tokenOverview.volume.h24)
     : (tokenListDetails?.volume_24h_usd ? formatMarketCap(tokenListDetails.volume_24h_usd) : "-");
   
-  const displayLiquidity = tokenOverview?.liquidity?.usd
-    ? formatMarketCap(tokenOverview.liquidity.usd)
+  const displayLiquidity = tokenOverview?.liquidity
+    ? formatMarketCap(tokenOverview.liquidity)
     : (tokenListDetails?.liquidity ? formatMarketCap(tokenListDetails.liquidity) : "-");
 
-  // DexScreener doesn't provide holders, rely entirely on Birdeye token list
-  const displayHolders = tokenListDetails?.holder
-    ? formatMarketCap(tokenListDetails.holder).replace("$", "")
-    : "-";
+  const displayHolders = tokenOverview?.holders
+    ? formatMarketCap(tokenOverview.holders).replace("$", "")
+    : (tokenListDetails?.holder ? formatMarketCap(tokenListDetails.holder).replace("$", "") : "-");
   
-  const top10Holding = undefined; // Neither DexScreener nor TokenList provides top 10 holding
+  const top10Holding = undefined;
 
-  const displayName = tokenListDetails?.name || tokenOverview?.baseToken?.name || `${symbol}`;
+  const displayName = tokenListDetails?.name || `${symbol}`;
 
   // Use livePrice from WebSocket if available, otherwise fallback to API price, then 0
   const displayPrice = livePrice || (tokenOverview?.priceUsd ? Number(tokenOverview.priceUsd) : (tokenListDetails?.price || 0));
@@ -85,18 +109,14 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
       {/* Left Section: Token Info */}
       <div className="flex items-center gap-3 shrink-0 w-full lg:w-auto overflow-hidden">
         <div className="relative shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={
-              logoURI ||
-              `https://ui-avatars.com/api/?name=${symbol}&background=random&size=40`
-            }
+          <Image
+            src={imgError ? `https://ui-avatars.com/api/?name=${symbol}&background=random&size=40` : finalLogoURI}
             alt={symbol}
-            className="w-10 h-10 rounded-full border border-white/10"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src =
-                `https://ui-avatars.com/api/?name=${symbol}&background=random&size=40`;
-            }}
+            width={40}
+            height={40}
+            unoptimized
+            className="w-10 h-10 rounded-full border border-white/10 object-cover"
+            onError={() => setImgError(true)}
           />
           <div className="absolute -bottom-1 right-0 bg-blue-500 rounded-full p-0.5 border border-[#0a0e1c]">
             <CircleCheckBig className="w-3 h-3" />
@@ -107,11 +127,27 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             <h2 className="text-xl font-semibold tracking-tight truncate">
               {symbol}
             </h2>
-            <div className="flex items-center gap-1.5 text-muted-foreground ml-2 shrink-0">
-              <Globe className="w-4 h-4 hover:text-white cursor-pointer transition-colors" />
-              <ExternalLink className="w-4 h-4 hover:text-white cursor-pointer transition-colors" />
-              <Search className="w-4 h-4 hover:text-white cursor-pointer transition-colors" />
-              <Star className="w-4 h-4 hover:text-yellow-400 cursor-pointer transition-colors" />
+            <div className="flex items-center gap-1.5 ml-2 shrink-0">
+              {website && (
+                <button aria-label="Website" onClick={() => window.open(website, "_blank", "noopener noreferrer")} className="flex items-center justify-center w-7 h-7 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors">
+                  <Globe className="w-4 h-4" />
+                </button>
+              )}
+              {twitter && (
+                <button aria-label="Twitter" onClick={() => window.open(twitter, "_blank", "noopener noreferrer")} className="flex items-center justify-center w-7 h-7 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors">
+                  <svg width="12" height="12" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="currentColor"/>
+                  </svg>
+                </button>
+              )}
+              {telegram && (
+                <button aria-label="Telegram" onClick={() => window.open(telegram, "_blank", "noopener noreferrer")} className="flex items-center justify-center w-7 h-7 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors">
+                  <Send className="w-4 h-4" />
+                </button>
+              )}
+              <button aria-label="Solscan Explorer" onClick={() => window.open(`https://solscan.io/token/${address}`, "_blank", "noopener noreferrer")} className="flex items-center justify-center w-7 h-7 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors">
+                <Search className="w-4 h-4" />
+              </button>
             </div>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5 shrink-0">
