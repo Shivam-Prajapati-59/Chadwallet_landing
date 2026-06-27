@@ -148,7 +148,7 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
   const description = birdeyeDetails?.extensions?.description as
     | string
     | undefined;
-    
+
   const exts = birdeyeDetails?.extensions as any;
   const website = exts?.website || exts?.websiteUrl;
   const twitter = exts?.twitter || exts?.twitterUrl;
@@ -228,14 +228,6 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
           />
         </div>
 
-        {/* Details Toggle is absolutely positioned at the bottom of the card */}
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-[11px] font-medium bg-[#161b2e] border border-white/5 hover:bg-[#1f263d] text-muted-foreground hover:text-white rounded-md px-4 py-1.5 transition-colors shadow-lg z-10"
-        >
-          {expanded ? "Read less" : "Read more"}
-        </button>
-
         <AnimatePresence>
           {expanded && (
             <motion.div
@@ -246,12 +238,22 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
             >
               <div className="flex items-center gap-2 mt-2 mb-2">
                 {website && (
-                  <button onClick={() => window.open(website, "_blank", "noopener noreferrer")} className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md border border-white/5 bg-transparent hover:bg-white/5 text-[11px] text-white font-medium transition-colors flex-1">
+                  <button
+                    onClick={() =>
+                      window.open(website, "_blank", "noopener noreferrer")
+                    }
+                    className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md border border-white/5 bg-transparent hover:bg-white/5 text-[11px] text-white font-medium transition-colors flex-1"
+                  >
                     <Globe className="w-3.5 h-3.5" /> Website
                   </button>
                 )}
                 {twitter && (
-                  <button onClick={() => window.open(twitter, "_blank", "noopener noreferrer")} className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md border border-white/5 bg-transparent hover:bg-white/5 text-[11px] text-white font-medium transition-colors flex-1">
+                  <button
+                    onClick={() =>
+                      window.open(twitter, "_blank", "noopener noreferrer")
+                    }
+                    className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md border border-white/5 bg-transparent hover:bg-white/5 text-[11px] text-white font-medium transition-colors flex-1"
+                  >
                     <svg
                       width="10"
                       height="10"
@@ -268,7 +270,12 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
                   </button>
                 )}
                 {telegram && (
-                  <button onClick={() => window.open(telegram, "_blank", "noopener noreferrer")} className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md border border-white/5 bg-transparent hover:bg-white/5 text-[11px] text-white font-medium transition-colors flex-1">
+                  <button
+                    onClick={() =>
+                      window.open(telegram, "_blank", "noopener noreferrer")
+                    }
+                    className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md border border-white/5 bg-transparent hover:bg-white/5 text-[11px] text-white font-medium transition-colors flex-1"
+                  >
                     <Send className="w-3.5 h-3.5" /> Telegram
                   </button>
                 )}
@@ -320,6 +327,14 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Details Toggle button */}
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-[11px] font-medium bg-[#161b2e] border border-white/5 hover:bg-[#1f263d] text-muted-foreground hover:text-white rounded-md px-4 py-1.5 transition-colors shadow-sm z-10"
+        >
+          {expanded ? "Read less" : "Read more"}
+        </button>
       </CardContent>
     </Card>
   );

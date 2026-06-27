@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { AlertTriangle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { USDC_MINT } from "@/utils/constants";
 import type { JupiterQuote } from "@/types/jupiter";
-import OrderTypeTabs, { OrderType } from "./OrderPanel/OrderTypeTabs";
+import { OrderType } from "./OrderPanel/OrderTypeTabs";
 import OrderInputSection from "./OrderPanel/OrderInputSection";
 import LimitInputs from "./OrderPanel/LimitInputs";
 import TPSLInputs from "./OrderPanel/TPSLInputs";
 import QuoteSummary from "./OrderPanel/QuoteSummary";
 import OrderActionButton from "./OrderPanel/OrderActionButton";
-import { Separator } from "../ui/separator";
 import { usePythWebSocket } from "@/hooks/usePythWebSocket";
 
 interface TradingOrderPanelProps {
@@ -142,8 +140,6 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
           </Button>
         </div>
 
-
-
         <OrderInputSection
           side={side}
           symbol={symbol}
@@ -169,7 +165,9 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
           />
         )}
         <div className="flex justify-between items-center px-2 pt-2">
-          <div className="text-[13px] font-semibold text-[#a0a0a0]">Balance unavailable</div>
+          <div className="text-[13px] font-semibold text-[#a0a0a0]">
+            Balance unavailable
+          </div>
         </div>
 
         <QuoteSummary
@@ -202,18 +200,6 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
           outputDecimals={outputDecimals}
         />
       </CardContent>
-
-      <CardFooter className="p-4 pt-1 pb-4 bg-background">
-        <div className="flex w-full items-center justify-between text-[11px] font-bold px-1">
-          <div className="flex items-center gap-1.5 text-[#4f67ff]">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.59 1.41.59s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
-            </svg>
-            <span>Lowest fees: 0.1%</span>
-          </div>
-          <Info className="w-[14px] h-[14px] text-white/30" />
-        </div>
-      </CardFooter>
     </Card>
   );
 };

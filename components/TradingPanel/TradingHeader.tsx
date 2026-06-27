@@ -62,36 +62,55 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
   const telegram = getSafeUrl(exts?.telegram || exts?.telegramUrl);
 
   // Derive real values from new global API
-  const rawMarketCap = tokenOverview?.marketCap || tokenOverview?.fdv || tokenListDetails?.market_cap;
-  const finalLogoURI = logoURI || tokenListDetails?.logo_uri || `https://ui-avatars.com/api/?name=${symbol}&background=random&size=40`;
-  
+  const rawMarketCap =
+    tokenOverview?.marketCap ||
+    tokenOverview?.fdv ||
+    tokenListDetails?.market_cap;
+  const finalLogoURI =
+    logoURI ||
+    tokenListDetails?.logo_uri ||
+    `https://ui-avatars.com/api/?name=${symbol}&background=random&size=40`;
+
   React.useEffect(() => {
     setImgError(false);
   }, [finalLogoURI]);
   const displayMarketCap = rawMarketCap ? formatMarketCap(rawMarketCap) : "-";
 
   // Real-time 24h change from API data
-  const change24h = tokenOverview?.priceChange?.h24 || tokenListDetails?.price_change_24h_percent || 0;
+  const change24h =
+    tokenOverview?.priceChange?.h24 ||
+    tokenListDetails?.price_change_24h_percent ||
+    0;
   const isPositiveChange = change24h >= 0;
 
   const displayVolume = tokenOverview?.volume?.h24
     ? formatMarketCap(tokenOverview.volume.h24)
-    : (tokenListDetails?.volume_24h_usd ? formatMarketCap(tokenListDetails.volume_24h_usd) : "-");
-  
+    : tokenListDetails?.volume_24h_usd
+      ? formatMarketCap(tokenListDetails.volume_24h_usd)
+      : "-";
+
   const displayLiquidity = tokenOverview?.liquidity
     ? formatMarketCap(tokenOverview.liquidity)
-    : (tokenListDetails?.liquidity ? formatMarketCap(tokenListDetails.liquidity) : "-");
+    : tokenListDetails?.liquidity
+      ? formatMarketCap(tokenListDetails.liquidity)
+      : "-";
 
   const displayHolders = tokenOverview?.holders
     ? formatMarketCap(tokenOverview.holders).replace("$", "")
-    : (tokenListDetails?.holder ? formatMarketCap(tokenListDetails.holder).replace("$", "") : "-");
-  
+    : tokenListDetails?.holder
+      ? formatMarketCap(tokenListDetails.holder).replace("$", "")
+      : "-";
+
   const top10Holding = undefined;
 
   const displayName = tokenListDetails?.name || `${symbol}`;
 
   // Use livePrice from WebSocket if available, otherwise fallback to API price, then 0
-  const displayPrice = livePrice || (tokenOverview?.priceUsd ? Number(tokenOverview.priceUsd) : (tokenListDetails?.price || 0));
+  const displayPrice =
+    livePrice ||
+    (tokenOverview?.priceUsd
+      ? Number(tokenOverview.priceUsd)
+      : tokenListDetails?.price || 0);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(address);
@@ -110,7 +129,11 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
       <div className="flex items-center gap-3 shrink-0 w-full lg:w-auto overflow-hidden">
         <div className="relative shrink-0">
           <Image
-            src={imgError ? `https://ui-avatars.com/api/?name=${symbol}&background=random&size=40` : finalLogoURI}
+            src={
+              imgError
+                ? `https://ui-avatars.com/api/?name=${symbol}&background=random&size=40`
+                : finalLogoURI
+            }
             alt={symbol}
             width={40}
             height={40}
@@ -123,29 +146,66 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
           </div>
         </div>
         <div className="flex flex-col min-w-0">
-          <div className="flex items-center gap-2">
-            <h2 className="text-xl font-semibold tracking-tight truncate">
+          <div className="flex items-center gap-1">
+            <h2 className="text-2xl font-semibold tracking-tight truncate">
               {symbol}
             </h2>
             <div className="flex items-center gap-1.5 ml-2 shrink-0">
               {website && (
-                <button aria-label="Website" onClick={() => window.open(website, "_blank", "noopener noreferrer")} className="flex items-center justify-center w-7 h-7 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors">
+                <button
+                  aria-label="Website"
+                  onClick={() =>
+                    window.open(website, "_blank", "noopener noreferrer")
+                  }
+                  className="flex items-center justify-center w-6 h-6 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors"
+                >
                   <Globe className="w-4 h-4" />
                 </button>
               )}
               {twitter && (
-                <button aria-label="Twitter" onClick={() => window.open(twitter, "_blank", "noopener noreferrer")} className="flex items-center justify-center w-7 h-7 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors">
-                  <svg width="12" height="12" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="currentColor"/>
+                <button
+                  aria-label="Twitter"
+                  onClick={() =>
+                    window.open(twitter, "_blank", "noopener noreferrer")
+                  }
+                  className="flex items-center justify-center  w-6 h-6 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 1200 1227"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
+                      fill="currentColor"
+                    />
                   </svg>
                 </button>
               )}
               {telegram && (
-                <button aria-label="Telegram" onClick={() => window.open(telegram, "_blank", "noopener noreferrer")} className="flex items-center justify-center w-7 h-7 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors">
+                <button
+                  aria-label="Telegram"
+                  onClick={() =>
+                    window.open(telegram, "_blank", "noopener noreferrer")
+                  }
+                  className="flex items-center justify-center  w-6 h-6 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors"
+                >
                   <Send className="w-4 h-4" />
                 </button>
               )}
-              <button aria-label="Solscan Explorer" onClick={() => window.open(`https://solscan.io/token/${address}`, "_blank", "noopener noreferrer")} className="flex items-center justify-center w-7 h-7 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors">
+              <button
+                aria-label="Solscan Explorer"
+                onClick={() =>
+                  window.open(
+                    `https://solscan.io/token/${address}`,
+                    "_blank",
+                    "noopener noreferrer",
+                  )
+                }
+                className="flex items-center justify-center  w-6 h-6 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-colors"
+              >
                 <Search className="w-4 h-4" />
               </button>
             </div>
@@ -293,7 +353,9 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             <span className="text-[10px] text-muted-foreground font-medium tracking-wider mb-0.5">
               Top 10 holding
             </span>
-            <span className="text-sm font-semibold text-white">{top10Holding}</span>
+            <span className="text-sm font-semibold text-white">
+              {top10Holding}
+            </span>
           </motion.div>
         )}
       </motion.div>

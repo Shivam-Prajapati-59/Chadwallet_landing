@@ -37,7 +37,7 @@ const TradingDashboard = () => {
         return {
           address: token,
           symbol: symbol,
-          logoURI: logoURI ? decodeURIComponent(logoURI) : prev.logoURI,
+          logoURI: logoURI || undefined,
         };
       });
     }
@@ -76,7 +76,7 @@ const TradingDashboard = () => {
         </div>
 
         {/* Trading View Chart (Middle) */}
-        <div className="bg-[#050816] border border-white/10 rounded-md h-[400px] lg:h-[60%] min-h-0 min-w-0 w-full overflow-hidden flex flex-col z-10 shrink-0 lg:shrink">
+        <div className=" border  rounded-md h-[500px] lg:h-[65%] min-h-0 min-w-0 w-full overflow-hidden flex flex-col z-10 shrink-0 lg:shrink">
           <TradingViewWidget
             address={selectedToken.address}
             symbol={selectedToken.symbol}
@@ -84,7 +84,7 @@ const TradingDashboard = () => {
         </div>
 
         {/* Order History (Bottom) */}
-        <div className="h-[400px] lg:h-[40%] min-h-0 min-w-0 w-full rounded-md overflow-hidden flex flex-col z-10 shrink-0 lg:shrink">
+        <div className="h-[400px] lg:h-[35%] min-h-0 min-w-0 w-full rounded-md overflow-hidden flex flex-col z-10 shrink-0 lg:shrink">
           <TradingHistoryPanel />
         </div>
       </div>

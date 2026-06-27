@@ -8,6 +8,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useTokenList } from "@/hooks/useTokenList";
+import { useTokenTrending } from "@/hooks/useTokenTrending";
 import type { BirdeyeToken } from "@/types/birdeye";
 
 import {
@@ -38,18 +39,41 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
   const [activeFilter, setActiveFilter] = useState("Watchlist");
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
 
+  const isTrending = activeFilter === "Trending";
+
   const {
-    data,
-    isLoading,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useTokenList({
-    sort_by: "volume_24h_usd",
-    sort_type: "desc",
-    limit: 20,
-  });
+    data: listData,
+    isLoading: listIsLoading,
+    error: listError,
+    fetchNextPage: listFetchNextPage,
+    hasNextPage: listHasNextPage,
+    isFetchingNextPage: listIsFetchingNextPage,
+  } = useTokenList(
+    {
+      sort_by: "volume_24h_usd",
+      sort_type: "desc",
+      limit: 20,
+    },
+    !isTrending,
+  );
+
+  const {
+    data: trendingData,
+    isLoading: trendingIsLoading,
+    error: trendingError,
+    fetchNextPage: trendingFetchNextPage,
+    hasNextPage: trendingHasNextPage,
+    isFetchingNextPage: trendingIsFetchingNextPage,
+  } = useTokenTrending(isTrending);
+
+  const data = isTrending ? trendingData : listData;
+  const isLoading = isTrending ? trendingIsLoading : listIsLoading;
+  const error = isTrending ? trendingError : listError;
+  const fetchNextPage = isTrending ? trendingFetchNextPage : listFetchNextPage;
+  const hasNextPage = isTrending ? trendingHasNextPage : listHasNextPage;
+  const isFetchingNextPage = isTrending
+    ? trendingIsFetchingNextPage
+    : listIsFetchingNextPage;
 
   const { ref, inView } = useInView();
 
@@ -87,7 +111,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
           </TabsList>
         </Tabs>
       </div>
-
+      <Separator />
       {/* Filters Scroll Area */}
       <div className="px-3 py-2 overflow-hidden">
         <ScrollArea className="w-full whitespace-nowrap">
