@@ -30,7 +30,10 @@ const HeroSection = () => {
   };
 
   return (
-    <div id="hero" className="relative flex flex-col items-center justify-center px-6 pt-12 pb-20 text-center md:px-10 lg:pt-16 lg:pb-32">
+    <div
+      id="hero"
+      className="relative flex flex-col items-center justify-center px-6 pt-12 pb-20 text-center md:px-10 lg:pt-16 lg:pb-32"
+    >
       <h1 className="font-heading text-[38px] font-bold tracking-tighter md:text-5xl lg:text-7xl">
         {HERO_DATA.heading1} <br />
         <span>{HERO_DATA.heading2}</span>
@@ -59,7 +62,7 @@ const HeroSection = () => {
           <Image
             src={TradingImage}
             alt="Trading demo"
-            className="w-full h-auto object-cover p-5"
+            className="w-full h-auto object-cover p-2"
             priority
           />
         </div>

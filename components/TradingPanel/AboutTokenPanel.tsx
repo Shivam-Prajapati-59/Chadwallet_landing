@@ -155,8 +155,8 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
   const telegram = exts?.telegram || exts?.telegramUrl;
 
   return (
-    <Card className="w-full bg-background border rounded-md relative overflow-visible flex flex-col shrink-0 mt-2 mb-4">
-      <CardContent className="p-4 pb-8 flex flex-col gap-4">
+    <Card className="w-full bg-background border rounded-md relative overflow-visible flex flex-col flex-1 mt-2">
+      <CardContent className="p-4 pb-8 flex flex-col gap-4 h-full">
         <div>
           <h2 className="text-base font-bold text-white mb-1">
             About {displayName}
