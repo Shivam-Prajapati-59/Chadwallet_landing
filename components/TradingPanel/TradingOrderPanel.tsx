@@ -12,7 +12,7 @@ import TPSLInputs from "./OrderPanel/TPSLInputs";
 import QuoteSummary from "./OrderPanel/QuoteSummary";
 import OrderActionButton from "./OrderPanel/OrderActionButton";
 import { Separator } from "../ui/separator";
-import { useBirdeyeWebSocket } from "@/hooks/useBirdeyeWebSocket";
+import { usePythWebSocket } from "@/hooks/usePythWebSocket";
 
 interface TradingOrderPanelProps {
   symbol: string;
@@ -34,7 +34,7 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
 
   const [debouncedAmount, setDebouncedAmount] = useState<string>("");
 
-  const { livePrice, isConnected } = useBirdeyeWebSocket(address);
+  const { livePrice, isConnected } = usePythWebSocket(address, symbol);
   const [flashColor, setFlashColor] = useState<string>("text-white");
   const prevPriceRef = React.useRef<number | null>(null);
 
