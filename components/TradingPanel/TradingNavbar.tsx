@@ -53,7 +53,7 @@ const TradingNavbar = () => {
     params.set("token", token.address);
     params.set("symbol", token.symbol);
     if (token.logo_uri) {
-      params.set("logoURI", encodeURIComponent(token.logo_uri));
+      params.set("logoURI", token.logo_uri);
     }
     
     // If we're already on the trade page, replace/push with new params
