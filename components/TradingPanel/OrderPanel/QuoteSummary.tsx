@@ -1,7 +1,7 @@
 import React from "react";
 import { Loader2 } from "lucide-react";
 import { USDC_LOGO } from "@/utils/constants";
-import type { OrderType } from "./OrderTypeTabs";
+import type { OrderType } from "../TradingOrderPanel";
 import type { JupiterQuote } from "@/types/jupiter";
 
 interface QuoteSummaryProps {

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Dark_logo from "../../public/assets/dark_logo.png";
+import Dark_logo from "@/public/assets/dark_logo.png";
 import { NAV_ITEMS } from "@/config/landing";
 import { Button } from "@/components/ui/button";
 import { usePrivy } from "@privy-io/react-auth";

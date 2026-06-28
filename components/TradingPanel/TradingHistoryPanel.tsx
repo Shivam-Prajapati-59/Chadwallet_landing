@@ -229,14 +229,14 @@ const TradingHistoryPanel = () => {
             value="swaps"
             className="mt-0 h-full p-4 flex items-center justify-center text-white/40 text-sm"
           >
-            Swaps history (Coming soon)
+            No swaps history available
           </TabsContent>
 
           <TabsContent
             value="thesis"
             className="mt-0 h-full p-4 flex items-center justify-center text-white/40 text-sm"
           >
-            Thesis list (Coming soon)
+            No thesis list available
           </TabsContent>
         </div>
       </Tabs>

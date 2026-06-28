@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import {
   Copy,
@@ -101,7 +101,7 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
       ? formatMarketCap(tokenListDetails.holder).replace("$", "")
       : "-";
 
-  const top10Holding = undefined;
+
 
   const displayName = tokenListDetails?.name || `${symbol}`;
 
@@ -341,23 +341,6 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
           </span>
         </motion.div>
 
-        {/* Top 10 holding (conditionally rendered) */}
-        {top10Holding && (
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, x: 20 },
-              show: { opacity: 1, x: 0 },
-            }}
-            className="flex flex-col shrink-0 bg-card rounded-md px-3 py-1.5 min-w-[90px]"
-          >
-            <span className="text-[10px] text-muted-foreground font-medium tracking-wider mb-0.5">
-              Top 10 holding
-            </span>
-            <span className="text-sm font-semibold text-white">
-              {top10Holding}
-            </span>
-          </motion.div>
-        )}
       </motion.div>
     </div>
   );

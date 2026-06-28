@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import type { OrderType } from "./OrderTypeTabs";
+import type { OrderType } from "../TradingOrderPanel";
 import type { JupiterQuote } from "@/types/jupiter";
 
 interface OrderActionButtonProps {

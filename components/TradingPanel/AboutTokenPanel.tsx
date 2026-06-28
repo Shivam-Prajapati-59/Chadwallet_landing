@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTokenOverview } from "@/hooks/useTokenOverview";
 import { useTokenList } from "@/hooks/useTokenList";
+import { useTokenMetadata } from "@/hooks/useTokenMetadata";
 import { Copy, Check, Globe, Send } from "lucide-react";
 import { formatMarketCap } from "@/utils/formatters";
 import { Card, CardContent } from "../ui/card";
@@ -103,14 +104,8 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
 }) => {
   const { data: tokenOverview } = useTokenOverview(address);
 
-  // Fallback for top 20 tokens
-  const { data: tokenListData } = useTokenList({
-    sort_by: "volume_24h_usd",
-    sort_type: "desc",
-    limit: 20,
-  });
-  const allTokens = tokenListData?.pages.flatMap((page) => page.tokens) ?? [];
-  const birdeyeDetails = allTokens.find((t) => t.address === address);
+  // Fetch reliable metadata for any token
+  const { data: birdeyeDetails } = useTokenMetadata(address);
 
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -149,10 +144,23 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
     | string
     | undefined;
 
+  const sanitizeUrl = (url?: string) => {
+    if (!url) return undefined;
+    try {
+      const parsed = new URL(url);
+      if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+        return url;
+      }
+    } catch {
+      // Invalid URL
+    }
+    return undefined;
+  };
+
   const exts = birdeyeDetails?.extensions as any;
-  const website = exts?.website || exts?.websiteUrl;
-  const twitter = exts?.twitter || exts?.twitterUrl;
-  const telegram = exts?.telegram || exts?.telegramUrl;
+  const website = sanitizeUrl(exts?.website || exts?.websiteUrl);
+  const twitter = sanitizeUrl(exts?.twitter || exts?.twitterUrl);
+  const telegram = sanitizeUrl(exts?.telegram || exts?.telegramUrl);
 
   return (
     <Card className="w-full bg-background border rounded-md relative overflow-visible flex flex-col flex-1 mt-2">

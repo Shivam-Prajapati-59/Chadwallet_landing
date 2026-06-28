@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import TradingImage from "../../public/assets/tradingpage.png";
+import TradingImage from "@/public/assets/tradingpage.png";
 import DiscoverImage from "@/public/assets/discover.png";
 import { HERO_DATA } from "@/config/landing";
 import { usePrivy } from "@privy-io/react-auth";

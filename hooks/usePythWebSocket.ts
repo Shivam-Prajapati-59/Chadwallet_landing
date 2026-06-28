@@ -36,7 +36,7 @@ export const usePythWebSocket = (address: string, symbol: string = "") => {
         // Match the exact symbol to avoid taking similar feeds (like USOL)
         const feed = feeds.find((f: any) => f.attributes.symbol === `Crypto.${symbol.toUpperCase()}/USD`);
         if (!feed) {
-          console.log(`[Pyth WS] No feed found for ${symbol}. Using cached API fallback.`);
+          // [Pyth WS] No feed found fallback
           return;
         }
 
@@ -52,7 +52,7 @@ export const usePythWebSocket = (address: string, symbol: string = "") => {
             return;
           }
           setIsConnected(true);
-          console.log(`[Pyth WS] Connected for ${symbol}`);
+          // Connected
           ws.send(JSON.stringify({
             "type": "subscribe",
             "ids": [feedId]
@@ -93,7 +93,7 @@ export const usePythWebSocket = (address: string, symbol: string = "") => {
         };
 
         ws.onclose = () => {
-          console.log(`[Pyth WS] Disconnected for ${symbol}`);
+          // Disconnected
           setIsConnected(false);
         };
       } catch (err) {

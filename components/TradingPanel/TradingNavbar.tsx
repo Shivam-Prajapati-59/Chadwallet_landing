@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Dark_logo from "@/public/assets/dark_logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, ArrowDownToLine, Loader2 } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ConnectWallet from "@/components/custom/ConnectWallet";
 import { usePrivy } from "@privy-io/react-auth";
@@ -24,9 +24,7 @@ const TradingNavbar = () => {
 
   const { data: searchResults, isLoading, isError } = useTokenSearch(debouncedQuery);
 
-  const handleDeposit = async () => {
-    //Todo
-  };
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -183,16 +181,7 @@ const TradingNavbar = () => {
 
         {/* Right: Deposit + Connect Wallet */}
         <div className="flex items-center gap-2 shrink-0">
-          {authenticated && user?.wallet?.address && (
-            <Button
-              variant="outline"
-              onClick={handleDeposit}
-              className="flex items-center gap-2 bg-white/5 hover:bg-white/10 rounded-md text-white border-white/10 font-medium transition-colors"
-            >
-              <ArrowDownToLine className="w-4 h-4" />
-              <span className="hidden sm:inline">Deposit</span>
-            </Button>
-          )}
+
           <ConnectWallet />
         </div>
       </div>

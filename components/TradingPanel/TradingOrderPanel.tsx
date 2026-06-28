@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { USDC_MINT } from "@/utils/constants";
 import type { JupiterQuote } from "@/types/jupiter";
-import { OrderType } from "./OrderPanel/OrderTypeTabs";
+export type OrderType = "market" | "limit" | "tpsl";
 import OrderInputSection from "./OrderPanel/OrderInputSection";
 import LimitInputs from "./OrderPanel/LimitInputs";
 import TPSLInputs from "./OrderPanel/TPSLInputs";
@@ -166,7 +166,7 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
         )}
         <div className="flex justify-between items-center px-2 pt-2">
           <div className="text-[13px] font-semibold text-[#a0a0a0]">
-            Balance unavailable
+            Balance: -- {side === "buy" ? "USDC" : symbol}
           </div>
         </div>
 

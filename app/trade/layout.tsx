@@ -1,24 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans, IBM_Plex_Sans, DM_Sans } from "next/font/google";
 import TradingNavbar from "@/components/TradingPanel/TradingNavbar";
-
-const notoSans = Noto_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-noto-sans",
-});
-
-const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-ibm-plex-sans",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-dm-sans",
-});
 
 export const metadata: Metadata = {
   title: "ChadWallet Trade",
@@ -32,7 +13,7 @@ export default function TradeLayout({
 }) {
   return (
     <div
-      className={`${notoSans.variable} ${ibmPlexSans.variable} ${dmSans.variable} font-sans h-screen overflow-hidden bg-[#050816] text-white flex flex-col`}
+      className="font-sans h-screen overflow-hidden bg-[#050816] text-white flex flex-col"
     >
       <TradingNavbar />
       {/* Ensure main keeps flex-1 and min-h-0 so children don't push it off screen */}

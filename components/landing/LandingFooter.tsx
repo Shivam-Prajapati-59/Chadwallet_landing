@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import DarkLogo from "../../public/assets/dark_logo.png";
+import DarkLogo from "@/public/assets/dark_logo.png";
 import { FOOTER_DATA } from "@/config/landing";
 
 const LandingFooter = () => {
