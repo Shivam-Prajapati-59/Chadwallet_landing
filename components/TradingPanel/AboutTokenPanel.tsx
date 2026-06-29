@@ -34,7 +34,7 @@ const ProgressBar = ({
   const leftPercent = total === 0 ? 50 : (leftValue / total) * 100;
 
   return (
-    <div className="flex flex-col gap-1 w-full mt-4">
+    <div className="flex flex-col gap-1 w-full mt-1">
       <div className="flex justify-between items-center text-xs font-semibold">
         <div>
           <span className="text-white">{leftLabel}</span>{" "}
@@ -45,13 +45,13 @@ const ProgressBar = ({
           <span className="text-muted-foreground">{rightSub}</span>
         </div>
       </div>
-      <div className="flex w-full h-1.5 rounded-full overflow-hidden bg-white/5 gap-1">
+      <div className="flex w-full h-1.5 gap-[3px] mt-1.5">
         <div
-          className="h-full bg-chart-green rounded-r-full"
+          className="h-full bg-chart-green rounded-full"
           style={{ width: `${leftPercent}%` }}
         />
         <div
-          className="h-full bg-red-500 rounded-l-full"
+          className="h-full bg-chart-red rounded-full"
           style={{ width: `${100 - leftPercent}%` }}
         />
       </div>
@@ -74,22 +74,20 @@ const TimeframeBox = ({
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center justify-center bg-[#0d1224] border rounded-md py-1.5 px-2 w-full transition-colors ${
-        isActive
-          ? "border-blue-500/50 bg-blue-500/10"
-          : "border-white/5 hover:border-white/20"
+      className={`flex flex-col items-center border border-white/10 justify-center rounded-xl py-2 px-2 w-full transition-colors ${
+        isActive ? "border-none bg-[#12111A]" : "hover:bg-[#1a1924]"
       }`}
     >
       <span
-        className={`text-[10px] font-medium uppercase tracking-wider mb-0.5 transition-colors ${
-          isActive ? "text-blue-400" : "text-muted-foreground"
+        className={`text-[12px] font-medium uppercase tracking-wider mb-0.5 transition-colors ${
+          isActive ? "text-white/90" : "text-white/40"
         }`}
       >
         {label}
       </span>
       <span
         className={`text-xs font-bold ${
-          isPositive ? "text-chart-green" : "text-red-500"
+          isPositive ? "text-chart-green" : "text-chart-red"
         }`}
       >
         {isPositive ? "▲" : "▼"} {Math.abs(value).toFixed(2)}%
@@ -163,8 +161,8 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
   const telegram = sanitizeUrl(exts?.telegram || exts?.telegramUrl);
 
   return (
-    <Card className="w-full bg-background border rounded-md relative overflow-visible flex flex-col flex-1 mt-2">
-      <CardContent className="p-4 pb-8 flex flex-col gap-4 h-full">
+    <Card className="w-full bg-[#060510] border border-white/10 rounded-xl relative overflow-visible flex flex-col flex-1 mt-2">
+      <CardContent className="px-4 py-1 flex flex-col gap-2 h-full">
         <div>
           <h2 className="text-base font-bold text-white mb-1">
             About {displayName}
@@ -217,7 +215,7 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
         </div>
 
         {/* Bars */}
-        <div className="flex flex-col gap-1 w-full">
+        <div className="flex flex-col gap-2 w-full mt-2">
           <ProgressBar
             leftLabel={buys.toLocaleString()}
             leftSub="buys"
@@ -233,6 +231,14 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
             rightSub="vol."
             leftValue={buyVol}
             rightValue={sellVol}
+          />
+          <ProgressBar
+            leftLabel="167"
+            leftSub="buyers"
+            rightLabel="181"
+            rightSub="sellers"
+            leftValue={167}
+            rightValue={181}
           />
         </div>
 
@@ -289,8 +295,6 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
                 )}
               </div>
 
-              <Separator />
-
               {displaySupply && (
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-muted-foreground flex-1">Supply</span>
@@ -305,20 +309,37 @@ const AboutTokenPanel: React.FC<AboutTokenPanelProps> = ({
                 <span className="text-muted-foreground flex-1">Network</span>
                 <span className="text-white/20 px-2 flex-1 border-b border-dashed border-white/10 relative -top-1"></span>
                 <span className="text-white font-medium flex items-center gap-1.5">
-                  <Globe className="w-3.5 h-3.5 text-blue-400" /> Solana
+                  <div className="flex items-center justify-center bg-[#1E1C27] w-4 h-4 rounded-[4px] border border-white/5">
+                    <svg
+                      width="10"
+                      height="10"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white/70"
+                    >
+                      <line x1="4" x2="20" y1="6" y2="6" />
+                      <line x1="4" x2="20" y1="12" y2="12" />
+                      <line x1="4" x2="20" y1="18" y2="18" />
+                    </svg>
+                  </div>
+                  Solana
                 </span>
               </div>
 
-              {createdTime && (
-                <div className="flex justify-between items-center text-xs">
-                  <span className="text-muted-foreground flex-1">Created</span>
-                  <span className="text-white/20 px-2 flex-1 border-b border-dashed border-white/10 relative -top-1"></span>
-                  <span className="text-white font-medium">{createdTime}</span>
-                </div>
-              )}
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-muted-foreground flex-1">Created</span>
+                <span className="text-white/20 px-2 flex-1 border-b border-dashed border-white/10 relative -top-1"></span>
+                <span className="text-white font-medium">1 year ago</span>
+              </div>
 
               <div className="flex justify-between items-center text-xs">
-                <span className="text-muted-foreground flex-1">Contract</span>
+                <span className="text-muted-foreground flex-1">
+                  Contract address
+                </span>
                 <span className="text-white/20 px-2 flex-1 border-b border-dashed border-white/10 relative -top-1"></span>
                 <button
                   onClick={handleCopy}

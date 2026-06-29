@@ -90,29 +90,29 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
     <div className="bg-[#060510] flex flex-col h-full border border-white/10 rounded-xl overflow-hidden">
       {/* Top Header Tabs */}
       <div className="bg-[#12111A]">
-        <Tabs defaultValue="tokens" className="w-full p-2">
+        <Tabs defaultValue="tokens" className="w-full p-1">
           <TabsList className="w-full bg-[#12111A] flex overflow-x-auto scrollbar-none justify-start">
             <TabsTrigger
               value="alerts"
-              className="py-3 border-none rounded-md shrink-0"
+              className="rounded-none border-none bg-transparent! hover:bg-transparent! p-0 text-muted-foreground hover:text-white data-[state=active]:text-white data-[state=active]:shadow-none text-[14px] data-active:bg-transparent! dark:data-active:bg-transparent!"
             >
               <Bell /> Alerts
             </TabsTrigger>
             <TabsTrigger
               value="tokens"
-              className="py-3 border-none rounded-md shrink-0"
+              className="rounded-none border-none bg-transparent! hover:bg-transparent! p-0 text-muted-foreground hover:text-white data-[state=active]:text-white data-[state=active]:shadow-none text-[14px] data-active:bg-transparent! dark:data-active:bg-transparent!"
             >
               Tokens
             </TabsTrigger>
             <TabsTrigger
               value="leaderboard"
-              className="py-3 border-none rounded-md shrink-0"
+              className="rounded-none border-none bg-transparent! hover:bg-transparent! p-0 text-muted-foreground hover:text-white data-[state=active]:text-white data-[state=active]:shadow-none text-[14px] data-active:bg-transparent! dark:data-active:bg-transparent!"
             >
               Leaderboard
             </TabsTrigger>
             <TabsTrigger
               value="feed"
-              className="py-3 border-none rounded-md shrink-0"
+              className="rounded-none border-none bg-transparent! hover:bg-transparent! p-0 text-muted-foreground hover:text-white data-[state=active]:text-white data-[state=active]:shadow-none text-[14px] data-active:bg-transparent! dark:data-active:bg-transparent!"
             >
               Feed
             </TabsTrigger>
@@ -122,14 +122,14 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
       {/* Filters Scroll Area */}
       <div className="px-3 py-1 overflow-hidden">
         <ScrollArea className="w-full whitespace-nowrap">
-          <div className="flex w-max space-x-1 rounded-lg p-1">
+          <div className="flex w-max space-x-1 rounded-lg">
             {FILTERS.map((filter) => (
               <Button
                 key={filter}
                 variant="ghost"
                 size="sm"
                 onClick={() => setActiveFilter(filter)}
-                className={`text-sm rounded-md shrink-0 transition-all duration-200
+                className={`text-xs rounded-md shrink-0 transition-all duration-200
         ${
           activeFilter === filter
             ? "bg-[#16161552] text-white border border-white/10"
@@ -155,7 +155,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
           </div>
         ) : error ? (
           <div className="flex items-center justify-center py-12">
-            <span className="text-sm text-destructive">
+            <span className="text-sm text-chart-red">
               Failed to load tokens
             </span>
           </div>
@@ -236,7 +236,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
                             className={`font-medium text-[11px] sm:text-xs flex items-center justify-end gap-1 w-full truncate ${
                               isPositive
                                 ? "text-chart-green"
-                                : "text-destructive"
+                                : "text-chart-red"
                             }`}
                           >
                             {isPositive ? (

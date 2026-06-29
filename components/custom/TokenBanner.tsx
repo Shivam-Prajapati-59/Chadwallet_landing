@@ -30,7 +30,7 @@ const TokenBanner = () => {
                   <span
                     className={cn(
                       "flex items-center gap-1 font-bold",
-                      token.isPositive ? "text-[#14F195]" : "text-red-400",
+                      token.isPositive ? "text-[#14F195]" : "text-chart-red",
                     )}
                   >
                     {token.isPositive ? (

@@ -8,6 +8,7 @@ import TradingOrderPanel from "./TradingOrderPanel";
 import TradingHistoryPanel from "./TradingHistoryPanel";
 import TradingHeader from "./TradingHeader";
 import AboutTokenPanel from "./AboutTokenPanel";
+import PositionsPanel from "./PositionsPanel";
 
 const TradingDashboard = () => {
   const searchParams = useSearchParams();
@@ -58,7 +59,7 @@ const TradingDashboard = () => {
   };
 
   return (
-    <section className="flex-1 w-full mx-auto px-2 pb-2 pt-1 md:px-4 md:pb-4 md:pt-1 flex flex-col lg:grid lg:grid-cols-[240px_minmax(0,1fr)_280px] xl:grid-cols-[280px_minmax(0,1fr)_400px] gap-2 lg:overflow-hidden min-h-0">
+    <section className="flex-1 w-full mx-auto px-2 pb-2 pt-1 md:px-4 md:pb-4 md:pt-1 flex flex-col lg:grid lg:grid-cols-[240px_minmax(0,1fr)_280px] xl:grid-cols-[350px_minmax(0,1fr)_350px] gap-2 lg:overflow-hidden min-h-0">
       {/* Left Column: Sidebar */}
       <div className="h-[450px] lg:h-full min-h-0 min-w-0 flex flex-col overflow-hidden shrink-0 lg:shrink">
         <TokenSidebar onSelectToken={handleSelectToken} />
@@ -90,7 +91,7 @@ const TradingDashboard = () => {
       </div>
 
       {/* Right Column: Trading Order Panel & About Token */}
-      <div className="h-auto lg:h-full min-h-0 min-w-0 flex flex-col overflow-y-auto custom-scrollbar z-20 shrink-0 lg:shrink pb-4 pr-1">
+      <div className="h-auto lg:h-full min-h-0 min-w-0 flex flex-col overflow-y-auto scrollbar-hide z-20 shrink-0 lg:shrink pb-4 pr-1">
         <TradingOrderPanel
           symbol={selectedToken.symbol}
           address={selectedToken.address}
@@ -100,6 +101,7 @@ const TradingDashboard = () => {
           symbol={selectedToken.symbol}
           address={selectedToken.address}
         />
+        <PositionsPanel />
       </div>
     </section>
   );

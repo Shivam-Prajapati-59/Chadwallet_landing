@@ -110,7 +110,7 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
             <span
               className={
                 Number(quote.priceImpactPct) > 0.05
-                  ? "text-red-400 font-medium"
+                  ? "text-chart-red font-medium"
                   : "text-[#14F195] font-medium"
               }
             >
@@ -168,7 +168,7 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
               <span>Active Triggers:</span>
               <span className="text-[#14F195] font-medium">
                 {tpPrice ? "Take Profit" : ""} {tpPrice && slPrice ? " & " : ""}{" "}
-                {slPrice ? <span className="text-red-400">Stop Loss</span> : ""}
+                {slPrice ? <span className="text-chart-red">Stop Loss</span> : ""}
               </span>
             </div>
           )}

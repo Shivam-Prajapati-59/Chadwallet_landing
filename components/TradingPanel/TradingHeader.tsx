@@ -289,7 +289,7 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             24H change
           </span>
           <span
-            className={`text-[14px] font-semibold ${isPositiveChange ? "text-chart-green" : "text-red-500"}`}
+            className={`text-[14px] font-semibold ${isPositiveChange ? "text-chart-green" : "text-chart-red"}`}
           >
             {isPositiveChange ? "▲" : "▼"}{" "}
             {formatPercent(change24h).replace("-", "")}

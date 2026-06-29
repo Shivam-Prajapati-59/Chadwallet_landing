@@ -27,10 +27,10 @@ const TPSLInputs: React.FC<TPSLInputsProps> = ({ tpPrice, setTpPrice, slPrice, s
       </div>
       <div className="flex-1 flex flex-col space-y-2">
         <div className="flex justify-between text-xs text-white/50">
-          <span className="text-red-400/70">Stop Loss (USDC)</span>
+          <span className="text-chart-red/70">Stop Loss (USDC)</span>
         </div>
-        <div className="flex items-center bg-[#0a0d16] p-3 rounded-xl border border-red-500/20">
-          <span className="text-red-400/50 mr-1">$</span>
+        <div className="flex items-center bg-[#0a0d16] p-3 rounded-xl border border-chart-red/20">
+          <span className="text-chart-red/50 mr-1">$</span>
           <input
             type="number"
             value={slPrice}

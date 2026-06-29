@@ -70,7 +70,7 @@ const TradingFooter = () => {
               height={12}
             />
             <span className="text-white">${token.symbol} {token.price}</span>
-            <span className={token.isUp ? "text-chart-green" : "text-red-500"}>
+            <span className={token.isUp ? "text-chart-green" : "text-chart-red"}>
               {token.change}
             </span>
           </button>

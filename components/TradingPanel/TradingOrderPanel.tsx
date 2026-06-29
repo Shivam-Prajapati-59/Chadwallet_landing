@@ -41,7 +41,7 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
       if (livePrice > prevPriceRef.current) {
         setFlashColor("text-green-500");
       } else if (livePrice < prevPriceRef.current) {
-        setFlashColor("text-red-500");
+        setFlashColor("text-chart-red");
       }
       const timer = setTimeout(() => setFlashColor("text-white"), 800);
       prevPriceRef.current = livePrice;
@@ -112,8 +112,8 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
       : 0;
 
   return (
-    <Card className="bg-[#060510] flex flex-col h- border border-white/10 rounded-xl">
-      <CardContent className="flex flex-col flex-1 p-4 space-y-4">
+    <Card className="bg-[#060510] flex flex-col shrink-0 border border-white/10 rounded-xl mt-2">
+      <CardContent className="flex flex-col flex-1 px-2 space-y-4">
         {/* Top Tabs: Buy / Sell */}
         <div className="flex w-full gap-2 px-1">
           <Button
@@ -132,7 +132,7 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
             onClick={() => setSide("sell")}
             className={`flex-1 h-12 text-[15px] font-bold rounded-lg transition-colors border border-white/5 ${
               side === "sell"
-                ? "bg-[#2a1415] text-[var(--color--chart-red)] hover:bg-[#2a1415]/80 hover:text-[var(--color--chart-red)]"
+                ? "bg-[#2a1415] text-(--color--chart-red) hover:bg-[#2a1415]/80 hover:text-(--color--chart-red)"
                 : "bg-[#12111A] text-[#8e8e93] hover:text-white"
             }`}
           >

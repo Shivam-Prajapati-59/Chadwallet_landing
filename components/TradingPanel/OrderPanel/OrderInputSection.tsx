@@ -18,7 +18,7 @@ const OrderInputSection: React.FC<OrderInputSectionProps> = ({
 }) => {
   return (
     <div className="flex flex-col space-y-4 border-none">
-      <div className="flex justify-between items-center px-4 py-6 bg-[#12111A] rounded-xl border border-white/5">
+      <div className="flex justify-between items-center px-4 py-4 bg-[#12111A] rounded-xl border border-white/5">
         <div className="flex items-center text-[32px] font-bold text-white/40 w-1/2">
           {side === "buy" && <span className="text-white/40 mr-1">$</span>}
           <input

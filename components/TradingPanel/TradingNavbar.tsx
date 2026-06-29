@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Dark_logo from "@/public/assets/dark_logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Loader2 } from "lucide-react";
+import { Search, Loader2, Triangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ConnectWallet from "@/components/custom/ConnectWallet";
@@ -144,20 +144,22 @@ const TokenRow = ({
 
         {/* 24h % change */}
         <div
-          className={`w-[64px] flex items-center justify-start gap-0.5 whitespace-nowrap tabular-nums ${
+          className={`w-[64px] flex items-center justify-start gap-1 whitespace-nowrap tabular-nums font-medium ${
             token.price_change_24h_percent === undefined
               ? "opacity-0"
               : token.price_change_24h_percent >= 0
                 ? "text-chart-green"
-                : "text-red-400"
+                : "text-chart-red"
           }`}
         >
           {token.price_change_24h_percent !== undefined && (
             <>
-              <span className="text-[10px]">
-                {token.price_change_24h_percent >= 0 ? "▲" : "▼"}
-              </span>
-              <span>
+              {token.price_change_24h_percent >= 0 ? (
+                <Triangle className="w-1.5 h-1.5 shrink-0 fill-current" />
+              ) : (
+                <Triangle className="w-1.5 h-1.5 shrink-0 fill-current rotate-180" />
+              )}
+              <span className="truncate">
                 {formatPercent(Math.abs(token.price_change_24h_percent))}
               </span>
             </>
@@ -264,13 +266,13 @@ const TradingNavbar = () => {
         {/* ── Search ── */}
         <div
           ref={containerRef}
-          className={`relative flex-1 max-w-2xl mx-auto transition-all ${isDropdownOpen ? "z-50" : ""}`}
+          className={`relative mt-8 flex-1 max-w-2xl mx-auto transition-all ${isDropdownOpen ? "z-50" : ""}`}
         >
           {/* ── Dropdown Container (renders behind the search bar) ── */}
           {isDropdownOpen && (
-            <div className="absolute top-[-8px] left-[-8px] right-[-8px] bg-[#12111A] backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] flex flex-col pt-[52px] pb-2 z-0 overflow-hidden">
+            <div className="absolute sm:top-[-8px] sm:left-[-8px] sm:right-[-8px] bg-[#12111A] backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] flex flex-col pt-[48px] sm:pt-[52px] pb-2 z-0 overflow-hidden">
               {/* Tab bar */}
-              <div className="px-3 pb-2 shrink-0">
+              <div className="px-3 pt-2 shrink-0">
                 <Tabs defaultValue="tokens" className="w-full">
                   <TabsList className="bg-transparent h-auto p-0 gap-1 flex justify-start">
                     {["All", "Tokens", "Users"].map((tab) => (
@@ -293,7 +295,7 @@ const TradingNavbar = () => {
                     <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
                   </div>
                 ) : isError ? (
-                  <p className="text-sm text-red-400 p-8 text-center">
+                  <p className="text-sm text-chart-red p-8 text-center">
                     Failed to load results
                   </p>
                 ) : searchResults && searchResults.length > 0 ? (
