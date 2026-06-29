@@ -38,7 +38,7 @@ const QuoteSummary: React.FC<QuoteSummaryProps> = ({
   if (Number(amount) <= 0) return null;
 
   return (
-    <div className="flex flex-col gap-1.5 p-2 bg-[#111319] rounded-lg border-none mt-1">
+    <div className="flex flex-col gap-1.5 p-2 bg-[#12111A] rounded-lg border-none mt-1">
       <div className="flex justify-between items-center text-[11px]">
         <span className="font-semibold text-white/40">
           {orderType === "market" ? "Expected Output:" : "Target Output:"}

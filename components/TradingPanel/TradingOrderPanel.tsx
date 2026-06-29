@@ -8,8 +8,8 @@ export type OrderType = "market" | "limit" | "tpsl";
 import OrderInputSection from "./OrderPanel/OrderInputSection";
 import LimitInputs from "./OrderPanel/LimitInputs";
 import TPSLInputs from "./OrderPanel/TPSLInputs";
-import QuoteSummary from "./OrderPanel/QuoteSummary";
 import OrderActionButton from "./OrderPanel/OrderActionButton";
+import { Tag, Info } from "lucide-react";
 import { usePythWebSocket } from "@/hooks/usePythWebSocket";
 
 interface TradingOrderPanelProps {
@@ -112,17 +112,17 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
       : 0;
 
   return (
-    <Card className="flex flex-col h-full bg-background border rounded-md">
+    <Card className="bg-[#060510] flex flex-col h- border border-white/10 rounded-xl">
       <CardContent className="flex flex-col flex-1 p-4 space-y-4">
         {/* Top Tabs: Buy / Sell */}
         <div className="flex w-full gap-2 px-1">
           <Button
             variant="ghost"
             onClick={() => setSide("buy")}
-            className={`flex-1 h-12 text-[15px] font-bold rounded-lg transition-colors ${
+            className={`flex-1 h-12 text-[15px] font-bold rounded-lg transition-colors border border-white/5 ${
               side === "buy"
-                ? "bg-[#1b3323] text-[#2cc461] hover:bg-[#1b3323]/80 hover:text-[#2cc461]"
-                : "bg-[#12141a] text-[#8e8e93] hover:text-white"
+                ? "bg-[#13271c] text-chart-green hover:bg-[#13271c]/80 hover:text-chart-green"
+                : "bg-[#12111A] text-[#8e8e93] hover:text-white"
             }`}
           >
             Buy
@@ -130,10 +130,10 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
           <Button
             variant="ghost"
             onClick={() => setSide("sell")}
-            className={`flex-1 h-12 text-[15px] font-bold rounded-lg transition-colors ${
+            className={`flex-1 h-12 text-[15px] font-bold rounded-lg transition-colors border border-white/5 ${
               side === "sell"
-                ? "bg-[#331b1b] text-[#c42c2c] hover:bg-[#331b1b]/80 hover:text-[#c42c2c]"
-                : "bg-[#12141a] text-[#8e8e93] hover:text-white"
+                ? "bg-[#2a1415] text-[var(--color--chart-red)] hover:bg-[#2a1415]/80 hover:text-[var(--color--chart-red)]"
+                : "bg-[#12111A] text-[#8e8e93] hover:text-white"
             }`}
           >
             Sell
@@ -164,27 +164,11 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
             setSlPrice={setSlPrice}
           />
         )}
-        <div className="flex justify-between items-center px-2 pt-2">
-          <div className="text-[13px] font-semibold text-[#a0a0a0]">
-            Balance: -- {side === "buy" ? "USDC" : symbol}
+        <div className="flex justify-between items-center px-1">
+          <div className="text-[13px] font-medium text-white/50">
+            $0 available
           </div>
         </div>
-
-        <QuoteSummary
-          orderType={orderType}
-          amount={amount}
-          isQuoting={isQuoting}
-          quote={quote}
-          limitOutAmount={limitOutAmount}
-          limitPrice={limitPrice}
-          tpPrice={tpPrice}
-          slPrice={slPrice}
-          side={side}
-          symbol={symbol}
-          logoURI={logoURI}
-          inputDecimals={inputDecimals}
-          outputDecimals={outputDecimals}
-        />
 
         <OrderActionButton
           orderType={orderType}
@@ -199,6 +183,15 @@ const TradingOrderPanel: React.FC<TradingOrderPanelProps> = ({
           symbol={symbol}
           outputDecimals={outputDecimals}
         />
+
+        {/* Lowest fees footer */}
+        <div className="flex justify-between items-center px-1 pt-2">
+          <div className="flex items-center gap-1.5 text-[#3b82f6] text-[12px] font-bold">
+            <Tag className="w-3.5 h-3.5 fill-current" />
+            Lowest fees: 0.05%
+          </div>
+          <Info className="w-4 h-4 text-white/30" />
+        </div>
       </CardContent>
     </Card>
   );

@@ -14,6 +14,7 @@ import { usePythWebSocket } from "@/hooks/usePythWebSocket";
 import { useTokenList } from "@/hooks/useTokenList";
 import { useTokenOverview } from "@/hooks/useTokenOverview";
 import { formatMarketCap, formatPercent } from "@/utils/formatters";
+import { SolanaIcon } from "@/components/icons/TokenIcons";
 
 interface TradingHeaderProps {
   symbol: string;
@@ -101,8 +102,6 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
       ? formatMarketCap(tokenListDetails.holder).replace("$", "")
       : "-";
 
-
-
   const displayName = tokenListDetails?.name || `${symbol}`;
 
   // Use livePrice from WebSocket if available, otherwise fallback to API price, then 0
@@ -124,7 +123,7 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full p-3 bg-[#0a0e1c] border-b border rounded-t-md gap-4 shrink-0 overflow-hidden">
+    <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full p-3 bg-[#060510] gap-4 shrink-0 overflow-hidden">
       {/* Left Section: Token Info */}
       <div className="flex items-center gap-3 shrink-0 w-full lg:w-auto overflow-hidden">
         <div className="relative shrink-0">
@@ -150,7 +149,11 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             <h2 className="text-2xl font-semibold tracking-tight truncate">
               {symbol}
             </h2>
-            <div className="flex items-center gap-1.5 ml-2 shrink-0">
+            <div className="flex items-center gap-1.5 shrink-0">
+              <div className="flex items-center justify-center w-6 h-6 rounded bg-white/5 border border-white/10 text-white">
+                <SolanaIcon />
+              </div>
+              <span className="text-white/10 -ml-1">|</span>
               {website && (
                 <button
                   aria-label="Website"
@@ -212,7 +215,7 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5 shrink-0">
             <span className="font-medium">{displayName}</span>
-            <span className="text-white/20">|</span>
+            <span className="text-white/10">|</span>
             <span className="font-mono">{shortenAddress(address)}</span>
             <button
               onClick={handleCopy}
@@ -245,12 +248,12 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             hidden: { opacity: 0, x: 20 },
             show: { opacity: 1, x: 0 },
           }}
-          className="flex flex-col shrink-0 px-3 py-1 min-w-[90px] justify-center items-center lg:items-start"
+          className="flex flex-col shrink-0 px-3 py-1 min-w-[90px] justify-center items-center lg:items-center"
         >
-          <span className="text-[11px] text-muted-foreground font-medium tracking-wider mb-0.5">
+          <span className="text-[12px] text-muted-foreground font-medium tracking-wider mb-0.5">
             Price
           </span>
-          <span className="text-xl font-bold text-white font-mono">
+          <span className="text-xl font-medium text-white font-mono">
             $
             {displayPrice.toLocaleString(undefined, {
               maximumSignificantDigits: 6,
@@ -264,12 +267,12 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             hidden: { opacity: 0, x: 20 },
             show: { opacity: 1, x: 0 },
           }}
-          className="flex flex-col shrink-0 bg-card rounded-md px-3 py-1.5 min-w-[90px]"
+          className="bg-[#12111A] flex flex-col shrink-0  rounded-md px-3 py-1.5 min-w-[90px] text-center"
         >
-          <span className="text-[10px] text-muted-foreground font-medium tracking-wider mb-0.5">
+          <span className="text-[12px] text-muted-foreground font-medium tracking-wider mb-0.5">
             Market cap
           </span>
-          <span className="text-sm font-semibold text-white">
+          <span className="text-[14px] font-semibold text-white">
             {displayMarketCap}
           </span>
         </motion.div>
@@ -280,13 +283,13 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             hidden: { opacity: 0, x: 20 },
             show: { opacity: 1, x: 0 },
           }}
-          className="flex flex-col shrink-0 bg-card rounded-md px-3 py-1.5 min-w-[90px]"
+          className="flex flex-col shrink-0 bg-[#12111A] rounded-md px-3 py-1.5 min-w-[90px] text-center"
         >
-          <span className="text-[10px] text-muted-foreground font-medium tracking-wider mb-0.5">
+          <span className="text-[12px] text-muted-foreground font-medium tracking-wider mb-0.5">
             24H change
           </span>
           <span
-            className={`text-sm font-semibold ${isPositiveChange ? "text-chart-green" : "text-red-500"}`}
+            className={`text-[14px] font-semibold ${isPositiveChange ? "text-chart-green" : "text-red-500"}`}
           >
             {isPositiveChange ? "▲" : "▼"}{" "}
             {formatPercent(change24h).replace("-", "")}
@@ -299,12 +302,12 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             hidden: { opacity: 0, x: 20 },
             show: { opacity: 1, x: 0 },
           }}
-          className="flex flex-col shrink-0 bg-card rounded-md px-3 py-1.5 min-w-[90px]"
+          className="flex flex-col shrink-0 bg-[#12111A] rounded-md px-3 py-1.5 min-w-[90px] text-center"
         >
-          <span className="text-[10px] text-muted-foreground font-medium tracking-wider mb-0.5">
+          <span className="text-[12px] text-muted-foreground font-medium tracking-wider mb-0.5">
             24H Vol.
           </span>
-          <span className="text-sm font-semibold text-white">
+          <span className="text-[14px] font-semibold text-white">
             {displayVolume}
           </span>
         </motion.div>
@@ -315,12 +318,12 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             hidden: { opacity: 0, x: 20 },
             show: { opacity: 1, x: 0 },
           }}
-          className="flex flex-col shrink-0 bg-card rounded-md px-3 py-1.5 min-w-[90px]"
+          className="flex flex-col shrink-0 bg-[#12111A] rounded-md px-3 py-1.5 min-w-[90px] text-center"
         >
-          <span className="text-[10px] text-muted-foreground font-medium tracking-wider mb-0.5">
+          <span className="text-[12px] text-muted-foreground font-medium tracking-wider mb-0.5">
             Liquidity
           </span>
-          <span className="text-sm font-semibold text-white">
+          <span className="text-[14px] font-semibold text-white">
             {displayLiquidity}
           </span>
         </motion.div>
@@ -331,16 +334,15 @@ const TradingHeader: React.FC<TradingHeaderProps> = ({
             hidden: { opacity: 0, x: 20 },
             show: { opacity: 1, x: 0 },
           }}
-          className="flex flex-col shrink-0 bg-card rounded-md px-3 py-1.5 min-w-[90px]"
+          className="flex flex-col shrink-0 bg-[#12111A] rounded-md px-3 py-1.5 min-w-[90px] text-center"
         >
-          <span className="text-[10px] text-muted-foreground font-medium tracking-wider mb-0.5">
+          <span className="text-[12px] text-muted-foreground font-medium tracking-wider mb-0.5">
             Holders
           </span>
-          <span className="text-sm font-semibold text-white">
+          <span className="text-[14px] font-semibold text-white">
             {displayHolders}
           </span>
         </motion.div>
-
       </motion.div>
     </div>
   );

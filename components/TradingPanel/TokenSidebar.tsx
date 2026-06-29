@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { TrendingUp, TrendingDown, Loader2 } from "lucide-react";
+import { Loader2, Bell, Triangle } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
@@ -16,7 +16,6 @@ import {
   formatMarketCap,
   formatPercent,
 } from "@/utils/formatters";
-import { Separator } from "../ui/separator";
 
 const FILTERS = [
   "Watchlist",
@@ -88,45 +87,54 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
     data?.pages.flatMap((page) => page.tokens) ?? [];
 
   return (
-    <div className="flex flex-col h-full border rounded-md overflow-hidden">
+    <div className="bg-[#060510] flex flex-col h-full border border-white/10 rounded-xl overflow-hidden">
       {/* Top Header Tabs */}
-      <div className="">
+      <div className="bg-[#12111A]">
         <Tabs defaultValue="tokens" className="w-full p-2">
-          <TabsList className="w-full bg-background flex overflow-x-auto scrollbar-none justify-start">
-            <TabsTrigger value="alerts" className="py-3 rounded-md shrink-0">
-              Alerts
+          <TabsList className="w-full bg-[#12111A] flex overflow-x-auto scrollbar-none justify-start">
+            <TabsTrigger
+              value="alerts"
+              className="py-3 border-none rounded-md shrink-0"
+            >
+              <Bell /> Alerts
             </TabsTrigger>
-            <TabsTrigger value="tokens" className="py-3 rounded-md shrink-0">
+            <TabsTrigger
+              value="tokens"
+              className="py-3 border-none rounded-md shrink-0"
+            >
               Tokens
             </TabsTrigger>
             <TabsTrigger
               value="leaderboard"
-              className="py-3 rounded-md shrink-0"
+              className="py-3 border-none rounded-md shrink-0"
             >
               Leaderboard
             </TabsTrigger>
-            <TabsTrigger value="feed" className="py-3 rounded-md shrink-0">
+            <TabsTrigger
+              value="feed"
+              className="py-3 border-none rounded-md shrink-0"
+            >
               Feed
             </TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
-      <Separator />
       {/* Filters Scroll Area */}
-      <div className="px-3 py-2 overflow-hidden">
+      <div className="px-3 py-1 overflow-hidden">
         <ScrollArea className="w-full whitespace-nowrap">
-          <div className="flex w-max space-x-1">
+          <div className="flex w-max space-x-1 rounded-lg p-1">
             {FILTERS.map((filter) => (
               <Button
                 key={filter}
-                variant={activeFilter === filter ? "secondary" : "ghost"}
+                variant="ghost"
                 size="sm"
                 onClick={() => setActiveFilter(filter)}
-                className={`text-sm rounded-md transition-all shrink-0 ${
-                  activeFilter === filter
-                    ? "text-primary-foreground font-semibold"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                }`}
+                className={`text-sm rounded-md shrink-0 transition-all duration-200
+        ${
+          activeFilter === filter
+            ? "bg-[#16161552] text-white border border-white/10"
+            : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+        }`}
               >
                 {filter}
               </Button>
@@ -141,7 +149,7 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-            <span className="ml-2 text-sm text-muted-foreground">
+            <span className="ml-5 text-sm text-muted-foreground">
               Loading tokens...
             </span>
           </div>
@@ -222,17 +230,19 @@ const TokenSidebar = ({ onSelectToken }: TokenSidebarProps = {}) => {
                       >
                         <div className="flex flex-col items-end gap-0.5 min-w-0">
                           <span className="font-semibold text-[13px] sm:text-sm text-foreground truncate w-full text-right">
-                            {formatMarketCap(token.market_cap)}
+                            {formatMarketCap(token.market_cap)} MC
                           </span>
                           <span
                             className={`font-medium text-[11px] sm:text-xs flex items-center justify-end gap-1 w-full truncate ${
-                              isPositive ? "text-green-500" : "text-destructive"
+                              isPositive
+                                ? "text-chart-green"
+                                : "text-destructive"
                             }`}
                           >
                             {isPositive ? (
-                              <TrendingUp className="w-3 h-3 shrink-0" />
+                              <Triangle className="w-1.5 h-1.5 shrink-0 fill-current" />
                             ) : (
-                              <TrendingDown className="w-3 h-3 shrink-0" />
+                              <Triangle className="w-1.5 h-1.5 shrink-0 fill-current rotate-180" />
                             )}
                             <span className="truncate">
                               {formatPercent(token.price_change_24h_percent)}

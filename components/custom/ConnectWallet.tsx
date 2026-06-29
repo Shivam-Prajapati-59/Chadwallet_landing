@@ -9,20 +9,31 @@ const ConnectWallet = () => {
   const { login, logout, authenticated, user } = usePrivy();
 
   if (authenticated && user) {
-    const walletAddress = user.wallet?.address;
-    const displayAddress = walletAddress
-      ? `${walletAddress.slice(0, 4)}...${walletAddress.slice(-4)}`
-      : "Connected";
-
     return (
-      <Button
-        variant="outline"
-        onClick={logout}
-        className="flex items-center gap-2 bg-white/5 hover:bg-white/10 rounded-md text-white border-white/10 font-medium"
-      >
-        <LogOut className="w-4 h-4" />
-        <span className="hidden sm:inline">{displayAddress}</span>
-      </Button>
+      <div className="flex items-center gap-2">
+        {/* Deposit Button */}
+        <button className="flex flex-col items-start justify-center px-3 h-12 border border-white/10 rounded-xl bg-[#090b14] hover:bg-white/5 transition-colors">
+          <div className="flex items-baseline gap-1">
+            <span className="text-white font-bold text-sm tracking-tight">$0.00</span>
+            <span className="text-muted-foreground text-xs font-semibold">cash</span>
+          </div>
+          <span className="text-[#3B82F6] font-bold text-xs mt-0.5">Deposit more</span>
+        </button>
+
+        {/* Wallet Button */}
+        <button 
+          onClick={logout} 
+          className="flex items-center gap-3 px-3 h-12 border border-white/10 rounded-xl bg-[#090b14] hover:bg-white/5 transition-colors group"
+        >
+          <div className="flex flex-col items-start">
+            <span className="text-white font-bold text-sm tracking-tight">$0.00</span>
+            <span className="text-muted-foreground text-xs font-mono">--</span>
+          </div>
+          <div className="w-8 h-8 rounded-full bg-[#14F195] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+            <Wallet className="w-4 h-4 text-black fill-black" />
+          </div>
+        </button>
+      </div>
     );
   }
 
@@ -30,7 +41,7 @@ const ConnectWallet = () => {
     <Button
       variant="default"
       onClick={login}
-      className="flex items-center gap-2 bg-[#14F195] hover:bg-[#14F195]/80 text-black rounded-md font-bold border-0 transition-colors"
+      className="flex items-center gap-2 px-6 h-12 bg-[#14F195] hover:bg-[#14F195]/80 text-black rounded-xl font-bold border-0 transition-colors"
     >
       <Wallet className="w-4 h-4" />
       <span className="hidden sm:inline">Connect Wallet</span>

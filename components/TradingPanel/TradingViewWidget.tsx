@@ -14,7 +14,7 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({
   if (!address) return null;
 
   return (
-    <div className="w-full h-full rounded-md overflow-hidden bg-[#050816]">
+    <div className="w-full h-full rounded-md overflow-hidden bg-[#16161552]">
       <iframe
         src={`https://birdeye.so/tv-widget/${address}?chain=solana&viewMode=pair&chartInterval=15&chartType=CANDLE&chartLeftToolbar=show&chartTopToolbar=show&theme=dark`}
         style={{ width: "100%", height: "100%", border: "none" }}

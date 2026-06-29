@@ -62,12 +62,10 @@ const OrderActionButton: React.FC<OrderActionButtonProps> = ({
   return (
     <Button
       disabled={isDisabled}
-      className={`w-full py-4 mt-auto rounded-md border-none font-bold text-[17px] transition-colors ${
+      className={`w-full h-[52px] mt-auto rounded-xl border border-white/5 font-bold text-[16px] transition-colors ${
         isDisabled
-          ? "bg-[#181920] text-white/70 opacity-100 cursor-not-allowed hover:bg-[#181920]"
-          : side === "buy"
-            ? "bg-green-500 hover:bg-green-400 text-black"
-            : "bg-[#a90b0b] hover:bg-[#8d0a0a] text-white"
+          ? "bg-[#12111A] text-white/40 opacity-100 cursor-not-allowed hover:bg-[#12111A]"
+          : "bg-[#12111A] hover:bg-[#1a1924] text-white/90"
       }`}
     >
       {buttonText}
