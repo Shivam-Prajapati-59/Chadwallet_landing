@@ -192,6 +192,7 @@ const TradingNavbar = () => {
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     data: searchResults,
@@ -247,10 +248,10 @@ const TradingNavbar = () => {
   const isDropdownOpen = isFocused && query.trim().length > 1;
 
   return (
-    <nav className="sticky top-0 z-50 w-full backdrop-blur-[5px] px-4 py-2">
-      <div className="flex items-center justify-between gap-4 h-12">
+    <nav className="sticky top-0 z-50 w-full backdrop-blur-[5px] px-2 sm:px-4 py-2">
+      <div className="flex items-center justify-between gap-2 sm:gap-4 h-12">
         {/* ── Logo ── */}
-        <Link href="/" className="flex shrink-0 items-center space-x-2">
+        <Link href="/" className={`flex shrink-0 items-center space-x-2 ${isFocused ? 'hidden sm:flex' : ''}`}>
           <Image
             src={Dark_logo.src}
             alt="Logo"
@@ -266,11 +267,11 @@ const TradingNavbar = () => {
         {/* ── Search ── */}
         <div
           ref={containerRef}
-          className={`relative mt-8 flex-1 max-w-2xl mx-auto transition-all ${isDropdownOpen ? "z-50" : ""}`}
+          className={`relative lg:mt-1  xl:mt-3 flex-1 max-w-2xl mx-auto transition-all ${isDropdownOpen ? "z-50" : ""}`}
         >
           {/* ── Dropdown Container (renders behind the search bar) ── */}
           {isDropdownOpen && (
-            <div className="absolute sm:top-[-8px] sm:left-[-8px] sm:right-[-8px] bg-[#12111A] backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] flex flex-col pt-[48px] sm:pt-[52px] pb-2 z-0 overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 sm:top-[-8px] sm:left-[-8px] sm:right-[-8px] bg-[#12111A] backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] flex flex-col pt-[48px] sm:pt-[52px] pb-2 z-0 overflow-hidden">
               {/* Tab bar */}
               <div className="px-3 pt-2 shrink-0">
                 <Tabs defaultValue="tokens" className="w-full">
@@ -317,16 +318,29 @@ const TradingNavbar = () => {
 
           {/* ── Search Input (floats on top) ── */}
           <div
-            className={`relative z-10 flex items-center px-4 h-12 transition-colors bg-[#0C0E15] border border-white/10 rounded-xl hover:border-white/20`}
+            className={`relative z-10 flex items-center h-12 transition-colors bg-[#0C0E15] border border-white/10 rounded-xl hover:border-white/20 cursor-text ${
+              !isFocused
+                ? "w-12 px-0 justify-center sm:w-full sm:px-4 sm:justify-start cursor-pointer"
+                : "w-full px-4"
+            }`}
+            onClick={() => {
+              if (!isFocused) {
+                setIsFocused(true);
+                setTimeout(() => inputRef.current?.focus(), 50);
+              }
+            }}
           >
-            <Search className="w-4 h-4 text-muted-foreground shrink-0 mr-3" />
+            <Search className={`w-4 h-4 text-muted-foreground shrink-0 ${!isFocused ? 'mr-0 sm:mr-3' : 'mr-3'}`} />
             <input
+              ref={inputRef}
               type="text"
               placeholder="Search tokens..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
-              className="bg-transparent border-none outline-none text-sm w-full placeholder:text-muted-foreground text-white font-medium"
+              className={`bg-transparent border-none outline-none text-sm w-full placeholder:text-transparent sm:placeholder:text-muted-foreground text-white font-medium ${
+                !isFocused ? "hidden sm:block" : "block"
+              }`}
             />
             <kbd className="hidden sm:flex px-2 py-0.5 bg-white/5 border border-white/10 rounded-md text-[10px] font-bold text-muted-foreground ml-2 tracking-wider">
               ESC
@@ -335,7 +349,7 @@ const TradingNavbar = () => {
         </div>
 
         {/* ── Right: Connect wallet ── */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className={`flex items-center gap-2 shrink-0 ${isFocused ? 'hidden sm:flex' : ''}`}>
           <ConnectWallet />
         </div>
       </div>
